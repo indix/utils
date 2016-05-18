@@ -21,6 +21,6 @@ lazy val productUtil = (project in file("util-product")).
   settings(
     name := "utils-product",
     libraryDependencies += (
-        "org.scalatest" % "scalatest_2.11" % "2.2.3"
+        "org.scalatest" %% "scalatest" % "2.2.3"
       )
   )
