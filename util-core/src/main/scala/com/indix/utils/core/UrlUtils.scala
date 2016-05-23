@@ -17,7 +17,7 @@ object UrlUtils {
 
   /** Find if the url is valid one or not
     *
-    * @param url Input ulr
+    * @param url Input url
     * @return if the url is valid or not
     */
   def isValid(url: String): Boolean = {
@@ -45,7 +45,7 @@ object UrlUtils {
   /**
     *
     * @param url Input url
-    * @return URL query params(key-value pairs) as [[Map]]
+    * @return URL query params(key-value pairs) as scala Map
     */
   def toQueryMap(url: String): Map[String, String] = {
     val query = try {
