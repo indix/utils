@@ -49,6 +49,10 @@ lazy val root = (project in file(".")).
   settings(unidocSettings: _*).
   settings(site.settings ++ ghpages.settings: _*).
   settings(
+    publish := { },
+    publishArtifact := false
+  ).
+  settings(
     name := "utils",
     site.addMappingsToSiteDir(mappings in (ScalaUnidoc, packageDoc), "latest/api"),
     git.remoteRepo := "git@github.com:ind9/utils.git"
