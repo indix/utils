@@ -4,7 +4,6 @@ package com.indix.utils.core
 import org.scalatest.FlatSpec
 import org.scalatest.Matchers._
 
-import com.indix.utils.core.UrlUtils
 
 class UrlUtilsSpec extends FlatSpec {
 
