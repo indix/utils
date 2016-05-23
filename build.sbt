@@ -47,11 +47,8 @@ lazy val publishSettings = Seq(
 lazy val root = (project in file(".")).
   settings(commonSettings: _* ).
   settings(unidocSettings: _*).
+  settings(publishSettings: _*).
   settings(site.settings ++ ghpages.settings: _*).
-  settings(
-    publish := { },
-    publishArtifact := false
-  ).
   settings(
     name := "utils",
     site.addMappingsToSiteDir(mappings in (ScalaUnidoc, packageDoc), "latest/api"),
