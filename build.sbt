@@ -15,9 +15,9 @@ lazy val root = (project in file(".")).
     site.addMappingsToSiteDir(mappings in (ScalaUnidoc, packageDoc), "latest/api"),
     git.remoteRepo := "git@github.com:ind9/utils.git"
   ).
-  aggregate(productUtil)
+  aggregate(coreUtils)
 
-lazy val productUtil = (project in file("util-product")).
+lazy val coreUtils = (project in file("util-core")).
   settings(
     name := "utils-product",
     libraryDependencies += (
