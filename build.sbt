@@ -62,7 +62,8 @@ lazy val coreUtils = (project in file("util-core")).
   settings(publishSettings: _*).
   settings(
     name := "util-core",
-    libraryDependencies += (
-      "org.scalatest" %% "scalatest" % "2.2.3"
+    libraryDependencies ++= Seq(
+        "org.scalatest" %% "scalatest" % "2.2.6",
+        "org.apache.commons" % "commons-lang3" % "3.4"
       )
   )
