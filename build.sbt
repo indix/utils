@@ -22,26 +22,27 @@ lazy val publishSettings = Seq(
     else
       Some("releases"  at nexus + "service/local/staging/deploy/maven2")
   },
-  pomExtra :=
-    <url>https://github.com/ind9/utils</url>
-      <licenses>
-        <license>
-          <name>Apache License</name>
-          <url>https://raw.githubusercontent.com/ind9/utils/master/LICENSE</url>
-          <distribution>repo</distribution>
-        </license>
-      </licenses>
-      <scm>
-        <url>git@github.com:ind/utils.git</url>
-        <connection>scm:git:git@github.com:ind9/utils.git</connection>
-      </scm>
-      <developers>
-        <developer>
-          <id>indix</id>
-          <name>Indix</name>
-          <url>http://oss.indix.com</url>
-        </developer>
-      </developers>
+  publishArtifact in Test := false,
+  pomIncludeRepository := { _ => false },
+  pomExtra := <url>https://github.com/ind9/utils</url>
+    <licenses>
+      <license>
+        <name>Apache License</name>
+        <url>https://raw.githubusercontent.com/ind9/utils/master/LICENSE</url>
+        <distribution>repo</distribution>
+      </license>
+    </licenses>
+    <scm>
+      <url>git@github.com:ind/utils.git</url>
+      <connection>scm:git:git@github.com:ind9/utils.git</connection>
+    </scm>
+    <developers>
+      <developer>
+        <id>indix</id>
+        <name>Indix</name>
+        <url>http://oss.indix.com</url>
+      </developer>
+    </developers>
 )
 
 lazy val root = (project in file(".")).
