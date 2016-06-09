@@ -5,10 +5,10 @@ val libVersion = sys.env.getOrElse("SNAP_PIPELINE_COUNTER", "0.1.0-SNAPSHOT")
 lazy val commonSettings = Seq(
   organization := "com.indix",
   version := libVersion,
-  scalaVersion := "2.11.7",
   autoAPIMappings := true,
   organizationName := "Indix",
   organizationHomepage := Some(url("http://oss.indix.com")),
+  crossScalaVersions := Seq("2.10.6", "2.11.7"),
   scalacOptions ++= Seq("-encoding", "UTF-8", "-deprecation", "-unchecked"),
   javacOptions ++= Seq("-Xlint:deprecation", "-source", "1.7")
 )
