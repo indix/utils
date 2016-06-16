@@ -1,6 +1,6 @@
 package com.indix.utils.core
 
-import java.net.{URI, URLDecoder, URL}
+import java.net.{URI, URLDecoder,URLEncoder, URL}
 
 import scala.util.Try
 
@@ -41,7 +41,7 @@ object UrlUtils {
     */
   def decode(url: String) = URLDecoder.decode(url, "UTF-8")
 
-
+  def encode(url: String) = URLEncoder.encode(url, "UTF-8").replace("+", "%20")
   /**
     *
     * @param url Input url
