@@ -39,4 +39,12 @@ class UrlUtilsSpec extends FlatSpec {
     UrlUtils.decode("http%3A%2F%2Fwww.example.com%2Fd%C3%BCsseldorf%3Fneighbourhood%3DL%C3%B6rick") should be ("http://www.example.com/düsseldorf?neighbourhood=Lörick")
   }
 
+  "UrlUtils#encode" should "UTF-8 decoded urls to unicode strings" in {
+    UrlUtils.encode("http://www.example.com/düsseldorf?neighbourhood=Lörick") should be ("http%3A%2F%2Fwww.example.com%2Fd%C3%BCsseldorf%3Fneighbourhood%3DL%C3%B6rick")
+  }
+
+  "UrlUtils#encodeSpaces" should "UTF-8 decoded urls to unicode strings" in {
+    UrlUtils.encode("word1 abcd") should be ("word1%20abcd")
+  }
+
 }

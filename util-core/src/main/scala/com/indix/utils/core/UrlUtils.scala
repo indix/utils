@@ -1,6 +1,6 @@
 package com.indix.utils.core
 
-import java.net.{URI, URLDecoder, URL}
+import java.net.{URI, URLDecoder,URLEncoder, URL}
 
 import scala.util.Try
 
@@ -34,13 +34,19 @@ object UrlUtils {
     URI.create(pageUrl).normalize().resolve(extractedUrl).normalize().toString
   }
 
-  /** Decode a given url using UTF-8 encoding
+  /** Decode a given string using UTF-8 encoding
     *
-    * @param url Input url
-    * @return Decoded url
+    * @param segment Input url segment
+    * @return Decoded segment
     */
-  def decode(url: String) = URLDecoder.decode(url, "UTF-8")
-
+  def decode(segment: String) = URLDecoder.decode(segment, "UTF-8")
+  
+  /** Encode a given string using UTF-8 encoding
+    *
+    * @param segment Input url segment
+    * @return Encoded segment
+    */
+  def encode(segment: String) = URLEncoder.encode(segment, "UTF-8").replace("+", "%20")
 
   /**
     *
