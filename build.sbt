@@ -10,7 +10,12 @@ lazy val commonSettings = Seq(
   organizationHomepage := Some(url("http://oss.indix.com")),
   scalaVersion := "2.11.8",
   scalacOptions ++= Seq("-encoding", "UTF-8", "-deprecation", "-unchecked"),
-  javacOptions ++= Seq("-Xlint:deprecation", "-source", "1.7")
+  javacOptions ++= Seq("-Xlint:deprecation", "-source", "1.7"),
+  resolvers ++= Seq(
+    "Clojars" at "http://clojars.org/repo",
+    "Concurrent Maven Repo" at "http://conjars.org/repo",
+    "Twttr Maven Repo"  at "http://maven.twttr.com/"
+  )
 )
 
 lazy val publishSettings = Seq(
