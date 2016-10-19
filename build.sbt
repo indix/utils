@@ -67,7 +67,7 @@ lazy val coreUtils = (project in file("util-core")).
   settings(publishSettings: _*).
   settings(
     name := "util-core",
-    crossScalaVersions := Seq("2.10.6", "2.11.8"),
+    crossScalaVersions := Seq("2.10.6"),
     libraryDependencies ++= Seq(
         "org.scalatest" %% "scalatest" % "2.2.6",
         "org.apache.commons" % "commons-lang3" % "3.4"
@@ -86,7 +86,8 @@ lazy val sparkUtils = (project in file("util-spark")).
       "org.apache.spark" %% "spark-sql" % "2.0.0",
       "com.databricks"   %% "spark-avro" % "3.0.1",
       "com.indix"  % "dfs-datastores" % "2.0.13" excludeAll(
-        ExclusionRule(organization = "org.apache.hadoop"), ExclusionRule(organization = "org.eclipse.jetty")
+        ExclusionRule(organization = "org.apache.hadoop"),
+        ExclusionRule(organization = "org.eclipse.jetty")
       ),
       "com.twitter" % "parquet-avro" % "1.6.0",
       "org.bdgenomics.utils" %% "utils-misc" % "0.2.2"
