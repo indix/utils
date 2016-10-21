@@ -69,7 +69,7 @@ lazy val coreUtils = (project in file("util-core")).
     name := "util-core",
     crossScalaVersions := Seq("2.10.6"),
     libraryDependencies ++= Seq(
-        "org.scalatest" %% "scalatest" % "2.2.6",
+        "org.scalatest" %% "scalatest" % "2.2.6" % "test",
         "org.apache.commons" % "commons-lang3" % "3.4"
       )
   )
@@ -81,7 +81,7 @@ lazy val sparkUtils = (project in file("util-spark")).
   settings(
     name := "util-spark",
     libraryDependencies ++= Seq(
-      "org.scalatest" %% "scalatest" % "2.2.6",
+      "org.scalatest" %% "scalatest" % "2.2.6" % "test",
       "org.apache.spark" %% "spark-core" % "2.0.0",
       "org.apache.spark" %% "spark-sql" % "2.0.0",
       "com.databricks"   %% "spark-avro" % "3.0.1",
