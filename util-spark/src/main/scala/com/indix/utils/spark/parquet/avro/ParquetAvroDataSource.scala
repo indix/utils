@@ -100,8 +100,7 @@ class AvroFormatter extends Serializable {
 trait ParquetAvroDataSource {
 
   implicit class AvroBasedParquetSource(sc: SparkContext) {
-    def avroBasedParquet[R <: IndexedRecord](sparkSchema: StructType, inputLocation: String)(implicit ev1: Manifest[R]) = {
-      val schema = toAvroSchema(sparkSchema)
+    def avroBasedParquet[R <: IndexedRecord](schema: Schema, inputLocation: String)(implicit ev1: Manifest[R]) = {
       val job = HadoopUtil.newJob(sc)
       AvroParquetInputFormat.setAvroReadSchema(job, schema)
       val avroType: Class[R] = manifest[R].runtimeClass.asInstanceOf[Class[R]]
