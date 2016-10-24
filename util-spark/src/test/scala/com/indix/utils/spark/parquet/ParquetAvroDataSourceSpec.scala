@@ -8,7 +8,7 @@ import org.apache.commons.io.FileUtils
 import org.apache.spark.sql.SparkSession
 import org.scalatest.{BeforeAndAfterAll, FlatSpec}
 import org.scalatest.Matchers.{be, convertToAnyShouldWrapper}
-import parquet.hadoop.metadata.CompressionCodecName
+import org.apache.parquet.hadoop.metadata.CompressionCodecName
 
 case class SampleAvroRecord(a: Int, b: String, c: Seq[String], d: Boolean, e: Double, f: collection.Map[String,String], g: Seq[Byte])
 

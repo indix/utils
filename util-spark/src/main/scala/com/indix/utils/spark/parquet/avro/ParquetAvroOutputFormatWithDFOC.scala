@@ -1,7 +1,7 @@
 package com.indix.utils.spark.parquet.avro
 
 import com.indix.utils.spark.parquet.DirectParquetOutputCommitter
-import parquet.avro.AvroParquetOutputFormat
+import org.apache.parquet.avro.AvroParquetOutputFormat
 
 class ParquetAvroOutputFormatWithDFOC extends AvroParquetOutputFormat {
 

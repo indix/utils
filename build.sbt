@@ -50,7 +50,7 @@ lazy val publishSettings = Seq(
     </developers>
 )
 
-lazy val root = (project in file(".")).
+lazy val utils = (project in file(".")).
   settings(commonSettings: _* ).
   settings(unidocSettings: _*).
   settings(publishSettings: _*).
@@ -89,7 +89,7 @@ lazy val sparkUtils = (project in file("util-spark")).
         ExclusionRule(organization = "org.apache.hadoop"),
         ExclusionRule(organization = "org.eclipse.jetty")
       ),
-      "com.twitter" % "parquet-avro" % "1.6.0",
+      "org.apache.parquet" % "parquet-avro" % "1.7.0",
       "org.bdgenomics.utils" %% "utils-misc" % "0.2.2"
     )
   )

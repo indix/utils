@@ -13,10 +13,10 @@ import org.apache.spark.rdd.RDD
 import org.apache.spark.sql.Row
 import org.apache.spark.sql.types._
 import org.bdgenomics.utils.misc.HadoopUtil
-import parquet.avro.{AvroParquetInputFormat, AvroParquetOutputFormat}
-import parquet.hadoop.ParquetOutputFormat
-import parquet.hadoop.metadata.CompressionCodecName
-import parquet.hadoop.util.ContextUtil
+import org.apache.parquet.avro.{AvroParquetInputFormat, AvroParquetOutputFormat}
+import org.apache.parquet.hadoop.ParquetOutputFormat
+import org.apache.parquet.hadoop.metadata.CompressionCodecName
+import org.apache.parquet.hadoop.util.ContextUtil
 
 import scala.reflect.ClassTag
 
