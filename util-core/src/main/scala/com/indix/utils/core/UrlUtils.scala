@@ -1,6 +1,8 @@
 package com.indix.utils.core
 
 import java.net.{URI, URLDecoder,URLEncoder, URL}
+import java.util.{Map => JMap, TreeMap => JTreeMap}
+import scala.collection.JavaConversions._
 
 import scala.util.Try
 
@@ -61,6 +63,34 @@ object UrlUtils {
     }
     queryStringMap(query)
   }
+
+  /**
+    *
+    * @param url Input url
+    * @return Url without hash fragments
+    */
+  def stripHashes(url: String) = url.replaceAll("#.*$", "")
+
+  /**
+    *
+    * @param url Input url
+    * @param attributes Map of attributes whose values will be appended to the url as hash fragments
+    * @return Url with hash fragments appended in sorted order of keys, with values in lowercase
+    */
+  def addHashFragments(url: String, attributes: JMap[String, String]) = {
+    new JTreeMap[String, String](attributes)
+      .foldLeft(url) {
+        case (resultingURL, attribute) =>
+          resultingURL + "#" + URLEncoder.encode(attribute._2.toLowerCase, "UTF-8")
+      }
+  }
+
+  /**
+    *
+    * @param url Input url
+    * @return List of hash fragments from the url
+    */
+  def getHashFragments(url: String) = url.split("#").drop(1)
 
   private def queryStringMap(query: String) = {
     val parts = query.split("&")

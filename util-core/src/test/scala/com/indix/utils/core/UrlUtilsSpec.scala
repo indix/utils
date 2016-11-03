@@ -1,9 +1,8 @@
 package com.indix.utils.core
 
-
 import org.scalatest.FlatSpec
 import org.scalatest.Matchers._
-
+import scala.collection.JavaConverters._
 
 class UrlUtilsSpec extends FlatSpec {
 
@@ -45,6 +44,29 @@ class UrlUtilsSpec extends FlatSpec {
 
   "UrlUtils#encodeSpaces" should "UTF-8 decoded urls to unicode strings" in {
     UrlUtils.encode("word1 abcd") should be ("word1%20abcd")
+  }
+
+  "UrlUtils#stripHashes" should "UTF-8 decoded urls to unicode strings" in {
+    UrlUtils.stripHashes("http://www.example.com/url#fragment") should be ("http://www.example.com/url")
+    UrlUtils.stripHashes("http://www.example.com/url#fragment1#fragment2") should be ("http://www.example.com/url")
+  }
+
+  "UrlUtils#addHashFragments" should "UTF-8 decoded urls to unicode strings" in {
+    UrlUtils.addHashFragments("http://www.example.com/url",
+      Map[String, String](
+        "attr1" -> "fragment2",
+        "attr2" -> "fragment 1"
+      ).asJava) should be ("http://www.example.com/url#fragment2#fragment+1")
+    UrlUtils.addHashFragments("http://www.example.com/url#fragment1",
+      Map[String, String](
+        "attr2" -> "fragment2",
+        "attr1" -> "fragment3"
+      ).asJava) should be ("http://www.example.com/url#fragment1#fragment3#fragment2")
+  }
+
+  "UrlUtils#get" should "UTF-8 decoded urls to unicode strings" in {
+    UrlUtils.getHashFragments("http://www.example.com/url#fragment1#fragment2") should be (List("fragment1", "fragment2"))
+    UrlUtils.getHashFragments("http://www.example.com/url") should be (List.empty)
   }
 
 }
