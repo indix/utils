@@ -2,6 +2,8 @@ package com.indix.utils.core
 
 import java.net.{URI, URLDecoder,URLEncoder, URL}
 import java.util.{Map => JMap, TreeMap => JTreeMap}
+import org.apache.commons.lang3.text.WordUtils
+
 import scala.collection.JavaConversions._
 
 import scala.util.Try
@@ -75,14 +77,22 @@ object UrlUtils {
     *
     * @param url Input url
     * @param attributes Map of attributes whose values will be appended to the url as hash fragments
-    * @return Url with hash fragments appended in sorted order of keys, with values in lowercase
+    * @return Url with hash fragments appended in sorted order of keys, with values in title case
     */
   def addHashFragments(url: String, attributes: JMap[String, String]) = {
     new JTreeMap[String, String](attributes)
       .foldLeft(url) {
-        case (resultingURL, attribute) =>
-          resultingURL + "#" + URLEncoder.encode(attribute._2.toLowerCase, "UTF-8")
+        case (resultingURL, attribute) => resultingURL + "#" + convertToUrlFragment(attribute._2)
       }
+  }
+
+  /**
+    *
+    * @param fragment Input fragment
+    * @return Fragment that is url encoded and in title case
+    */
+  def convertToUrlFragment(fragment: String) = {
+    URLEncoder.encode(WordUtils.capitalize(fragment, ' ', '-', '/'), "UTF-8")
   }
 
   /**

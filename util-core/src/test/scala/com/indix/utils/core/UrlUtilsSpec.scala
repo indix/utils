@@ -51,17 +51,18 @@ class UrlUtilsSpec extends FlatSpec {
     UrlUtils.stripHashes("http://www.example.com/url#fragment1#fragment2") should be ("http://www.example.com/url")
   }
 
-  "UrlUtils#addHashFragments" should "UTF-8 decoded urls to unicode strings" in {
+  "UrlUtils#addHashFragments" should "add fragments to url" in {
     UrlUtils.addHashFragments("http://www.example.com/url",
       Map[String, String](
         "attr1" -> "fragment2",
-        "attr2" -> "fragment 1"
-      ).asJava) should be ("http://www.example.com/url#fragment2#fragment+1")
-    UrlUtils.addHashFragments("http://www.example.com/url#fragment1",
-      Map[String, String](
-        "attr2" -> "fragment2",
-        "attr1" -> "fragment3"
-      ).asJava) should be ("http://www.example.com/url#fragment1#fragment3#fragment2")
+        "attr2" -> "fragment 1",
+        "attr3" -> "Fragment-of-1",
+        "attr4" -> "XL"
+      ).asJava) should be ("http://www.example.com/url#Fragment2#Fragment+1#Fragment-Of-1#XL")
+  }
+
+  "UrlUtils#convertToUrlFragment" should "convert to url fragments" in {
+    UrlUtils.convertToUrlFragment("x-large / red") should be ("X-Large+%2F+Red")
   }
 
   "UrlUtils#get" should "UTF-8 decoded urls to unicode strings" in {
