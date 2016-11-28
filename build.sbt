@@ -1,3 +1,4 @@
+import sbt.Keys._
 
 val libVersion = sys.env.getOrElse("SNAP_PIPELINE_COUNTER", "0.1.0-SNAPSHOT")
 
@@ -14,7 +15,7 @@ lazy val commonSettings = Seq(
   resolvers ++= Seq(
     "Clojars" at "http://clojars.org/repo",
     "Concurrent Maven Repo" at "http://conjars.org/repo",
-    "Twttr Maven Repo"  at "http://maven.twttr.com/"
+    "Twttr Maven Repo" at "http://maven.twttr.com/"
   )
 )
 
@@ -25,7 +26,7 @@ lazy val publishSettings = Seq(
     if (isSnapshot.value)
       Some("snapshots" at nexus + "content/repositories/snapshots")
     else
-      Some("releases"  at nexus + "service/local/staging/deploy/maven2")
+      Some("releases" at nexus + "service/local/staging/deploy/maven2")
   },
   publishArtifact in Test := false,
   pomIncludeRepository := { _ => false },
@@ -51,13 +52,13 @@ lazy val publishSettings = Seq(
 )
 
 lazy val utils = (project in file(".")).
-  settings(commonSettings: _* ).
+  settings(commonSettings: _*).
   settings(unidocSettings: _*).
   settings(publishSettings: _*).
   settings(site.settings ++ ghpages.settings: _*).
   settings(
     name := "utils",
-    site.addMappingsToSiteDir(mappings in (ScalaUnidoc, packageDoc), "latest/api"),
+    site.addMappingsToSiteDir(mappings in(ScalaUnidoc, packageDoc), "latest/api"),
     git.remoteRepo := "git@github.com:ind9/utils.git"
   ).
   aggregate(coreUtils, sparkUtils)
@@ -69,9 +70,23 @@ lazy val coreUtils = (project in file("util-core")).
     name := "util-core",
     crossScalaVersions := Seq("2.10.6"),
     libraryDependencies ++= Seq(
-        "org.scalatest" %% "scalatest" % "2.2.6" % "test",
-        "org.apache.commons" % "commons-lang3" % "3.4"
-      )
+      "org.scalatest" %% "scalatest" % "2.2.6" % "test",
+      "org.apache.commons" % "commons-lang3" % "3.4"
+    )
+  )
+
+lazy val storeUtils = (project in file("util-store")).
+  settings(commonSettings: _*).
+  settings(publishSettings: _*).
+  settings(
+    name := "util-store",
+    crossScalaVersions := Seq("2.10.6"),
+    libraryDependencies ++= Seq(
+      "org.scalatest" %% "scalatest" % "2.2.6" % "test",
+      "org.apache.commons" % "commons-lang3" % "3.4",
+      "commons-io" % "commons-io" % "2.5",
+      "org.rocksdb" % "rocksdbjni" % "4.11.2"
+    )
   )
 
 
@@ -84,11 +99,11 @@ lazy val sparkUtils = (project in file("util-spark")).
       "org.scalatest" %% "scalatest" % "2.2.6" % "test",
       "org.apache.spark" %% "spark-core" % "2.0.0",
       "org.apache.spark" %% "spark-sql" % "2.0.0",
-      "com.databricks"   %% "spark-avro" % "3.0.1",
-      "com.indix"  % "dfs-datastores" % "2.0.17" excludeAll(
+      "com.databricks" %% "spark-avro" % "3.0.1",
+      "com.indix" % "dfs-datastores" % "2.0.17" excludeAll(
         ExclusionRule(organization = "org.apache.hadoop"),
         ExclusionRule(organization = "org.eclipse.jetty")
-      ),
+        ),
       "org.apache.parquet" % "parquet-avro" % "1.7.0",
       "org.bdgenomics.utils" %% "utils-misc" % "0.2.2"
     )
