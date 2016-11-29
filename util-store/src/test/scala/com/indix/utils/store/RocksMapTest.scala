@@ -52,8 +52,8 @@ class RocksMapTest extends FlatSpec with Matchers {
   it should "put and get values" in {
     val db = new RocksMap("test")
 
-    db.put(1, "hello")
-    db.get[Int, String](1).getOrElse("") should be("hello")
+    db.put(1, 1.0)
+    db.get[Int, Double](1).getOrElse(0) should be(1.0)
     db.clear()
     db.drop()
     db.close()
@@ -62,10 +62,10 @@ class RocksMapTest extends FlatSpec with Matchers {
   it should "remove values" in {
     val db = new RocksMap("test")
 
-    db.put(1, "hello")
-    db.get[Int, String](1).getOrElse("") should be("hello")
+    db.put(1, 1L)
+    db.get[Int, Long](1).getOrElse(0) should be(1L)
     db.remove(1)
-    db.get[Int, String](1) should be(None)
+    db.get[Int, Long](1) should be(None)
     db.drop()
     db.close()
   }

@@ -83,8 +83,8 @@ lazy val storeUtils = (project in file("util-store")).
     crossScalaVersions := Seq("2.10.6"),
     libraryDependencies ++= Seq(
       "org.scalatest" %% "scalatest" % "2.2.6" % "test",
-      "org.apache.commons" % "commons-lang3" % "3.4",
       "commons-io" % "commons-io" % "2.5",
+      "com.twitter" %% "chill" % "0.8.1",
       "org.rocksdb" % "rocksdbjni" % "4.11.2"
     )
   )
