@@ -110,26 +110,28 @@ trait ParquetAvroDataSource {
   }
 
   implicit class AvroBasedParquetSinkRDD[R <: IndexedRecord : ClassTag](rdd: RDD[R]) {
-    def saveAvroInParquet(outputLocation: String, schema: Schema, compression: CompressionCodecName = CompressionCodecName.UNCOMPRESSED) = {
+    def saveAvroInParquet(outputLocation: String, schema: Schema, compression: CompressionCodecName = CompressionCodecName.UNCOMPRESSED, useDFOC: Boolean = true) = {
       val job = HadoopUtil.newJob(rdd.context.hadoopConfiguration)
       AvroParquetOutputFormat.setSchema(job, schema)
       ParquetOutputFormat.setCompression(job, compression)
       ParquetOutputFormat.setPageSize(job, 32 * 1024 * 1024) // 128 MB seems way too large
+      val outputFormatter = if(useDFOC) classOf[ParquetAvroOutputFormatWithDFOC] else classOf[AvroParquetOutputFormat]
       rdd.map(r => null.asInstanceOf[Void] -> r)
-        .saveAsNewAPIHadoopFile(outputLocation, classOf[Void], classOf[IndexedRecord], classOf[ParquetAvroOutputFormatWithDFOC], ContextUtil.getConfiguration(job))
+        .saveAsNewAPIHadoopFile(outputLocation, classOf[Void], classOf[IndexedRecord], outputFormatter, ContextUtil.getConfiguration(job))
     }
 
   }
 
   implicit class AvroBasedParquetSinkDataFrame(rdd: RDD[Row]) {
-    def saveAvroInParquet(outputLocation: String, sparkSchema: StructType, compression: CompressionCodecName = CompressionCodecName.UNCOMPRESSED) = {
+    def saveAvroInParquet(outputLocation: String, sparkSchema: StructType, compression: CompressionCodecName = CompressionCodecName.UNCOMPRESSED, useDFOC: Boolean = true) = {
       val schema = toAvroSchema(sparkSchema)
       val job = HadoopUtil.newJob(rdd.context.hadoopConfiguration)
       AvroParquetOutputFormat.setSchema(job, schema)
       ParquetOutputFormat.setCompression(job, compression)
       ParquetOutputFormat.setPageSize(job, 32 * 1024 * 1024)
+      val outputFormatter = if(useDFOC) classOf[ParquetAvroOutputFormatWithDFOC] else classOf[AvroParquetOutputFormat]
       rdd.map((r: Row) => null.asInstanceOf[Void] -> new AvroFormatter().createConverterToAvro(sparkSchema, "topLevelRecord", "")(r).asInstanceOf[GenericRecord])
-        .saveAsNewAPIHadoopFile(outputLocation, classOf[Void], classOf[IndexedRecord], classOf[ParquetAvroOutputFormatWithDFOC], ContextUtil.getConfiguration(job))
+        .saveAsNewAPIHadoopFile(outputLocation, classOf[Void], classOf[IndexedRecord], outputFormatter, ContextUtil.getConfiguration(job))
     }
   }
 
