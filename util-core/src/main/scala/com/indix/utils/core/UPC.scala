@@ -57,20 +57,24 @@ case class UPC(rawUpc: Long) {
 object UPC {
 
   /**
-    * Parsers a valid UPC string to a standardized UPC (GTIN-14)
+    * Parses a valid UPC string to a standardized UPC (GTIN-14)
     * If the given string is not a valid UPC, the method throws an `IllegalArgumentException`
     */
 
   def apply(input: String) = {
-    val rawUpc = verifyValidUpc(input)
+    val rawUpc = verifyValidUpc(clean(input))
     new UPC(rawUpc.toLong)
+  }
+
+  private def clean(input: String) = {
+    input.replaceAll("-", "")
   }
 
 
   private def verifyValidUpc(input: String) = {
     if (StringUtils.isEmpty(input))
       fail(input + " is either null / empty")
-    else if (parseLong(input).isEmpty)
+    else if (!parseLong(input).exists(_ > 0))
       fail("NAN value - " + input)
     else if (input.length < 7 || input.length > 14)
       fail("Invalid UPC/EAN -" + input)

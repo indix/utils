@@ -17,6 +17,8 @@ class UPCSpec extends FlatSpec with Matchers {
     UPC("27242860940").standardize should be("00027242860940")
     UPC("75317405253").standardize should be("00753174052534")
     UPC("0753174052534").standardize should be("00753174052534")
+    UPC("-810000439").standardize should be("00008100004393")
+    UPC("810-000-439").standardize should be("00008100004393")
   }
 
   it should "fail for all zeroes UPC" in {
