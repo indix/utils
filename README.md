@@ -14,10 +14,9 @@ Currently published only for scala-2.11.
 
 # Using in your project
 
-To use utils-core,
+## utils-core
 
-`"com.indix" % "utils-core_2.11" % "0.1.15"`
-
+`"com.indix" %% "utils-core" % "0.1.15"`
 
 # License
 
