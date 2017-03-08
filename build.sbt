@@ -71,7 +71,8 @@ lazy val coreUtils = (project in file("util-core")).
     crossScalaVersions := Seq("2.10.6"),
     libraryDependencies ++= Seq(
       "org.scalatest" %% "scalatest" % "2.2.6" % "test",
-      "org.apache.commons" % "commons-lang3" % "3.4"
+      "org.apache.commons" % "commons-lang3" % "3.4",
+      "com.netaporter" %% "scala-uri" % "0.4.16"
     )
   )
 
