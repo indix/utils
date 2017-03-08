@@ -108,7 +108,7 @@ object UrlUtils {
       p =>
         val q = p.split("=")
         q.length match {
-          case 2 => URLDecoder.decode(q(0), "UTF-8") -> URLDecoder.decode(q(1), "UTF-8")
+          case x if x > 1 => URLDecoder.decode(q(0), "UTF-8") -> URLDecoder.decode(q(1), "UTF-8")
           case 1 => URLDecoder.decode(q(0), "UTF-8") -> ""
         }
     }.toMap

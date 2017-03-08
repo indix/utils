@@ -23,6 +23,11 @@ class UrlUtilsSpec extends FlatSpec {
 
     val resMap2 = UrlUtils.toQueryMap("http://google.com/")
     resMap2.size should be (0)
+
+    val resMap3 = UrlUtils.toQueryMap("http://uae.souq.com/ae-en/educational-book/national-park-service/english/a-19-1401/l/?ref=nav?ref=nav&page=23")
+    resMap3.size should be (2)
+    resMap3 should contain ("ref" -> "nav?ref")
+    resMap3 should contain ("page" -> "23")
   }
 
   "UrlUtils#isValid" should "return true/false given the url is valid" in {
