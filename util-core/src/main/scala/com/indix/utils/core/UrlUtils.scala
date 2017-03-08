@@ -1,11 +1,13 @@
 package com.indix.utils.core
 
-import java.net.{URI, URLDecoder,URLEncoder, URL}
+import java.net.{URI, URL, URLDecoder, URLEncoder}
 import java.util.{Map => JMap, TreeMap => JTreeMap}
+
+import com.netaporter.uri.Uri
+import org.apache.commons.lang3.StringUtils
 import org.apache.commons.lang3.text.WordUtils
 
 import scala.collection.JavaConversions._
-
 import scala.util.Try
 
 /** Useful helper methods to operate on product urls */
@@ -58,12 +60,10 @@ object UrlUtils {
     * @return URL query params(key-value pairs) as scala Map
     */
   def toQueryMap(url: String): Map[String, String] = {
-    val query = try {
-      Option(new URL(url).getQuery).getOrElse("")
-    } catch {
-      case e: Throwable => ""
-    }
-    queryStringMap(query)
+    Uri.parse(url).query
+      .filterParamsNames(StringUtils.isNotBlank)
+      .paramMap
+      .mapValues(_.mkString(","))
   }
 
   /**
@@ -101,16 +101,4 @@ object UrlUtils {
     * @return List of hash fragments from the url
     */
   def getHashFragments(url: String) = url.split("#").drop(1)
-
-  private def queryStringMap(query: String) = {
-    val parts = query.split("&")
-    parts.filter(_.nonEmpty).map {
-      p =>
-        val q = p.split("=")
-        q.length match {
-          case x if x > 1 => URLDecoder.decode(q(0), "UTF-8") -> URLDecoder.decode(q(1), "UTF-8")
-          case 1 => URLDecoder.decode(q(0), "UTF-8") -> ""
-        }
-    }.toMap
-  }
 }
