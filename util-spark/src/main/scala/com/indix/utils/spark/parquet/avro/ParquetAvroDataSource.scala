@@ -115,7 +115,7 @@ trait ParquetAvroDataSource {
       AvroParquetOutputFormat.setSchema(job, schema)
       ParquetOutputFormat.setCompression(job, compression)
       ParquetOutputFormat.setPageSize(job, 32 * 1024 * 1024) // 128 MB seems way too large
-      val outputFormatter = if(useDFOC) classOf[ParquetAvroOutputFormatWithDFOC] else classOf[AvroParquetOutputFormat]
+      val outputFormatter = if(useDFOC) classOf[ParquetAvroOutputFormatWithDFOC] else classOf[AvroParquetOutputFormat[GenericRecord]]
       rdd.map(r => null.asInstanceOf[Void] -> r)
         .saveAsNewAPIHadoopFile(outputLocation, classOf[Void], classOf[IndexedRecord], outputFormatter, ContextUtil.getConfiguration(job))
     }
@@ -129,7 +129,7 @@ trait ParquetAvroDataSource {
       AvroParquetOutputFormat.setSchema(job, schema)
       ParquetOutputFormat.setCompression(job, compression)
       ParquetOutputFormat.setPageSize(job, 32 * 1024 * 1024)
-      val outputFormatter = if(useDFOC) classOf[ParquetAvroOutputFormatWithDFOC] else classOf[AvroParquetOutputFormat]
+      val outputFormatter = if(useDFOC) classOf[ParquetAvroOutputFormatWithDFOC] else classOf[AvroParquetOutputFormat[GenericRecord]]
       rdd.map((r: Row) => null.asInstanceOf[Void] -> new AvroFormatter().createConverterToAvro(sparkSchema, "topLevelRecord", "")(r).asInstanceOf[GenericRecord])
         .saveAsNewAPIHadoopFile(outputLocation, classOf[Void], classOf[IndexedRecord], outputFormatter, ContextUtil.getConfiguration(job))
     }

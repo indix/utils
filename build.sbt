@@ -9,7 +9,7 @@ lazy val commonSettings = Seq(
   autoAPIMappings := true,
   organizationName := "Indix",
   organizationHomepage := Some(url("http://oss.indix.com")),
-  scalaVersion := "2.11.8",
+  scalaVersion := "2.11.11",
   scalacOptions ++= Seq("-encoding", "UTF-8", "-deprecation", "-unchecked"),
   javacOptions ++= Seq("-Xlint:deprecation", "-source", "1.7"),
   resolvers ++= Seq(
@@ -70,8 +70,8 @@ lazy val coreUtils = (project in file("util-core")).
     name := "util-core",
     crossScalaVersions := Seq("2.10.6"),
     libraryDependencies ++= Seq(
-      "org.scalatest" %% "scalatest" % "2.2.6" % "test",
-      "org.apache.commons" % "commons-lang3" % "3.4",
+      "org.scalatest" %% "scalatest" % "3.0.3" % "test",
+      "org.apache.commons" % "commons-lang3" % "3.5",
       "com.netaporter" %% "scala-uri" % "0.4.16"
     )
   )
@@ -83,7 +83,7 @@ lazy val storeUtils = (project in file("util-store")).
     name := "util-store",
     crossScalaVersions := Seq("2.10.6"),
     libraryDependencies ++= Seq(
-      "org.scalatest" %% "scalatest" % "2.2.6" % "test",
+      "org.scalatest" %% "scalatest" % "3.0.3" % "test",
       "commons-io" % "commons-io" % "2.5",
       "com.twitter" %% "chill" % "0.8.1",
       "org.rocksdb" % "rocksdbjni" % "4.11.2"
@@ -97,15 +97,15 @@ lazy val sparkUtils = (project in file("util-spark")).
   settings(
     name := "util-spark",
     libraryDependencies ++= Seq(
-      "org.scalatest" %% "scalatest" % "2.2.6" % "test",
-      "org.apache.spark" %% "spark-core" % "2.0.0",
-      "org.apache.spark" %% "spark-sql" % "2.0.0",
-      "com.databricks" %% "spark-avro" % "3.0.1",
-      "com.indix" % "dfs-datastores" % "2.0.17" excludeAll(
+      "org.scalatest" %% "scalatest" % "3.0.3" % "test",
+      "org.apache.spark" %% "spark-core" % "2.1.1",
+      "org.apache.spark" %% "spark-sql" % "2.1.1",
+      "com.databricks" %% "spark-avro" % "3.2.0",
+      "com.indix" % "dfs-datastores" % "2.0.21" excludeAll(
         ExclusionRule(organization = "org.apache.hadoop"),
         ExclusionRule(organization = "org.eclipse.jetty")
         ),
-      "org.apache.parquet" % "parquet-avro" % "1.7.0",
-      "org.bdgenomics.utils" %% "utils-misc" % "0.2.2"
+      "org.apache.parquet" % "parquet-avro" % "1.8.2",
+      "org.bdgenomics.utils" %% "utils-misc" % "0.2.13"
     )
   )
