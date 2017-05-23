@@ -16,7 +16,7 @@ Currently published only for scala-2.11.
 
 ## util-core
 
-`"com.indix" %% "util-core" % "0.1.15"`
+`"com.indix" %% "util-core" % "0.2.36"`
 
 # License
 
