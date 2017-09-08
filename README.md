@@ -1,4 +1,5 @@
 # utils
+[![Build Status](https://travis-ci.org/indix/utils.svg?branch=master)](https://travis-ci.org/indix/utils)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.indix/utils_2.11/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.indix/utils_2.11)
 
 Scala utils for anything and everything
