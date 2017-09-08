@@ -1,7 +1,6 @@
 import sbt.Keys._
 
-val libVersion = sys.env.getOrElse("SNAP_PIPELINE_COUNTER", "0.1.0-SNAPSHOT")
-
+val libVersion = sys.env.get("TRAVIS_TAG") orElse sys.env.get("BUILD_LABEL") getOrElse s"1.0.0-${System.currentTimeMillis / 1000}-SNAPSHOT"
 
 lazy val commonSettings = Seq(
   organization := "com.indix",
@@ -21,6 +20,12 @@ lazy val commonSettings = Seq(
 
 lazy val publishSettings = Seq(
   publishMavenStyle := true,
+  pgpSecretRing := file("local.secring.gpg"),
+
+  pgpPublicRing := file("local.pubring.gpg"),
+
+  pgpPassphrase := Some(sys.env.getOrElse("GPG_PASSPHRASE", "").toCharArray),
+
   publishTo := {
     val nexus = "https://oss.sonatype.org/"
     if (isSnapshot.value)
