@@ -24,12 +24,4 @@ project/plugins/project/
 .DS_Store
 *.iml
 
-resources/env-conf/*.conf
-holonet/**/data/*.db
-
-#ops
-ops/kubernetes/src
-
-#docs
-docs/_book
-node_modules/
+*.gpg
