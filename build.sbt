@@ -35,17 +35,17 @@ lazy val publishSettings = Seq(
   },
   publishArtifact in Test := false,
   pomIncludeRepository := { _ => false },
-  pomExtra := <url>https://github.com/ind9/utils</url>
+  pomExtra := <url>https://github.com/indix/utils</url>
     <licenses>
       <license>
         <name>Apache License</name>
-        <url>https://raw.githubusercontent.com/ind9/utils/master/LICENSE</url>
+        <url>https://raw.githubusercontent.com/indix/utils/master/LICENSE</url>
         <distribution>repo</distribution>
       </license>
     </licenses>
     <scm>
-      <url>git@github.com:ind/utils.git</url>
-      <connection>scm:git:git@github.com:ind9/utils.git</connection>
+      <url>git@github.com:indix/utils.git</url>
+      <connection>scm:git:git@github.com:indix/utils.git</connection>
     </scm>
     <developers>
       <developer>
@@ -64,7 +64,7 @@ lazy val utils = (project in file(".")).
   settings(
     name := "utils",
     site.addMappingsToSiteDir(mappings in(ScalaUnidoc, packageDoc), "latest/api"),
-    git.remoteRepo := "git@github.com:ind9/utils.git"
+    git.remoteRepo := "git@github.com:indix/utils.git"
   ).
   aggregate(coreUtils, sparkUtils)
 
