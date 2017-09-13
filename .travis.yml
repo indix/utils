@@ -31,6 +31,7 @@ deploy:
     on:
       tags: true
       jdk: oraclejdk8
+      scala: "2.11.11"
 
 notifications:
  slack:
