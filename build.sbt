@@ -73,7 +73,7 @@ lazy val coreUtils = (project in file("util-core")).
   settings(publishSettings: _*).
   settings(
     name := "util-core",
-    crossScalaVersions := Seq("2.10.6", "2.11.7"),
+    crossScalaVersions := Seq("2.10.6", "2.11.11"),
     libraryDependencies ++= Seq(
       "org.scalatest" %% "scalatest" % "3.0.3" % Test,
       "org.apache.commons" % "commons-lang3" % "3.5",
@@ -86,7 +86,7 @@ lazy val storeUtils = (project in file("util-store")).
   settings(publishSettings: _*).
   settings(
     name := "util-store",
-    crossScalaVersions := Seq("2.10.6", "2.11.7"),
+    crossScalaVersions := Seq("2.10.6", "2.11.11"),
     libraryDependencies ++= Seq(
       "org.scalatest" %% "scalatest" % "3.0.3" % Test,
       "commons-io" % "commons-io" % "2.5",
@@ -101,7 +101,7 @@ lazy val sparkUtils = (project in file("util-spark")).
   settings(publishSettings: _*).
   settings(
     name := "util-spark",
-    crossScalaVersions := Seq("2.10.6", "2.11.7"),
+    crossScalaVersions := Seq("2.10.6", "2.11.11"),
     libraryDependencies ++= Seq(
       "org.scalatest" %% "scalatest" % "3.0.3" % Test,
       "org.apache.spark" %% "spark-core" % "2.1.1",
