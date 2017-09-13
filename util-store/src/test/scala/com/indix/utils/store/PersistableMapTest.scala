@@ -2,7 +2,7 @@ package com.indix.utils.store
 
 import org.scalatest._
 
-class PersistableMapTest extends FlatSpec with ShouldMatchers with BeforeAndAfter {
+class PersistableMapTest extends FlatSpec with Matchers with BeforeAndAfter {
   before {
     val path = new java.io.File("/tmp/rocks")
     if(!path.exists()){
