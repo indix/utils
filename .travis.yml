@@ -34,8 +34,8 @@ deploy:
       scala: "2.11.11"
 
 notifications:
- slack:
-   rooms:
-     secure: HQdcZwqDY9+vGW7N9YZ2tFeU50SgqrWEQefI/injWVcndkAL7U/TFOoFvyOdxPZA1sya3aKUyAfVVv7BzMdPUfas41LgYj+iSWAaidiwqrJMp3lkvvALoXId9IDrdWcbhqJ4F51dfO8ck6Jf0S9cXtXC8/dSunWJORdr9ycgkxs=
-   on_success: change
-   on_failure: always
+  slack:
+    rooms:
+      secure: HQdcZwqDY9+vGW7N9YZ2tFeU50SgqrWEQefI/injWVcndkAL7U/TFOoFvyOdxPZA1sya3aKUyAfVVv7BzMdPUfas41LgYj+iSWAaidiwqrJMp3lkvvALoXId9IDrdWcbhqJ4F51dfO8ck6Jf0S9cXtXC8/dSunWJORdr9ycgkxs=
+    on_success: change
+    on_failure: always
