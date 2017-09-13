@@ -66,16 +66,16 @@ lazy val utils = (project in file(".")).
     site.addMappingsToSiteDir(mappings in(ScalaUnidoc, packageDoc), "latest/api"),
     git.remoteRepo := "git@github.com:indix/utils.git"
   ).
-  aggregate(coreUtils, sparkUtils)
+  aggregate(coreUtils, storeUtils, sparkUtils)
 
 lazy val coreUtils = (project in file("util-core")).
   settings(commonSettings: _*).
   settings(publishSettings: _*).
   settings(
     name := "util-core",
-    crossScalaVersions := Seq("2.10.6"),
+    crossScalaVersions := Seq("2.10.6", "2.11.7"),
     libraryDependencies ++= Seq(
-      "org.scalatest" %% "scalatest" % "3.0.3" % "test",
+      "org.scalatest" %% "scalatest" % "3.0.3" % Test,
       "org.apache.commons" % "commons-lang3" % "3.5",
       "com.netaporter" %% "scala-uri" % "0.4.16"
     )
@@ -86,9 +86,9 @@ lazy val storeUtils = (project in file("util-store")).
   settings(publishSettings: _*).
   settings(
     name := "util-store",
-    crossScalaVersions := Seq("2.10.6"),
+    crossScalaVersions := Seq("2.10.6", "2.11.7"),
     libraryDependencies ++= Seq(
-      "org.scalatest" %% "scalatest" % "3.0.3" % "test",
+      "org.scalatest" %% "scalatest" % "3.0.3" % Test,
       "commons-io" % "commons-io" % "2.5",
       "com.twitter" %% "chill" % "0.8.1",
       "org.rocksdb" % "rocksdbjni" % "4.11.2"
@@ -101,8 +101,9 @@ lazy val sparkUtils = (project in file("util-spark")).
   settings(publishSettings: _*).
   settings(
     name := "util-spark",
+    crossScalaVersions := Seq("2.10.6", "2.11.7"),
     libraryDependencies ++= Seq(
-      "org.scalatest" %% "scalatest" % "3.0.3" % "test",
+      "org.scalatest" %% "scalatest" % "3.0.3" % Test,
       "org.apache.spark" %% "spark-core" % "2.1.1",
       "org.apache.spark" %% "spark-sql" % "2.1.1",
       "com.databricks" %% "spark-avro" % "3.2.0",
