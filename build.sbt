@@ -3,11 +3,11 @@ import sbt.Keys._
 val libVersion = sys.env.get("TRAVIS_TAG") orElse sys.env.get("BUILD_LABEL") getOrElse s"1.0.0-${System.currentTimeMillis / 1000}-SNAPSHOT"
 
 lazy val commonSettings = Seq(
-  organization := "com.indix",
   version := libVersion,
   autoAPIMappings := true,
+  organization := "com.indix",
   organizationName := "Indix",
-  organizationHomepage := Some(url("http://oss.indix.com")),
+  organizationHomepage := Some(url("http://www.indix.com")),
   scalaVersion := "2.11.11",
   scalacOptions ++= Seq("-encoding", "UTF-8", "-deprecation", "-unchecked"),
   javacOptions ++= Seq("-Xlint:deprecation", "-source", "1.7"),
@@ -21,11 +21,8 @@ lazy val commonSettings = Seq(
 lazy val publishSettings = Seq(
   publishMavenStyle := true,
   pgpSecretRing := file("local.secring.gpg"),
-
   pgpPublicRing := file("local.pubring.gpg"),
-
   pgpPassphrase := Some(sys.env.getOrElse("GPG_PASSPHRASE", "").toCharArray),
-
   publishTo := {
     val nexus = "https://oss.sonatype.org/"
     if (isSnapshot.value)
@@ -35,7 +32,8 @@ lazy val publishSettings = Seq(
   },
   publishArtifact in Test := false,
   pomIncludeRepository := { _ => false },
-  pomExtra := <url>https://github.com/indix/utils</url>
+  pomExtra :=
+    <url>https://github.com/indix/utils</url>
     <licenses>
       <license>
         <name>Apache License</name>
@@ -51,7 +49,7 @@ lazy val publishSettings = Seq(
       <developer>
         <id>indix</id>
         <name>Indix</name>
-        <url>http://oss.indix.com</url>
+        <url>http://www.indix.com</url>
       </developer>
     </developers>
 )
@@ -59,10 +57,10 @@ lazy val publishSettings = Seq(
 lazy val utils = (project in file(".")).
   settings(commonSettings: _*).
   settings(unidocSettings: _*).
-  settings(publishSettings: _*).
   settings(site.settings ++ ghpages.settings: _*).
   settings(
     name := "utils",
+    publish := { },
     site.addMappingsToSiteDir(mappings in(ScalaUnidoc, packageDoc), "latest/api"),
     git.remoteRepo := "git@github.com:indix/utils.git"
   ).
