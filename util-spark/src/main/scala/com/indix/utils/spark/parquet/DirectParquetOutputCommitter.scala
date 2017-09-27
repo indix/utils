@@ -18,12 +18,14 @@
 
 package com.indix.utils.spark.parquet
 
-import org.apache.hadoop.fs.Path
+import org.apache.hadoop.fs.{Path, PathFilter}
 import org.apache.hadoop.mapreduce.lib.output.FileOutputCommitter
 import org.apache.hadoop.mapreduce.{JobContext, TaskAttemptContext}
 import org.apache.parquet.Log
 import org.apache.parquet.hadoop.util.ContextUtil
 import org.apache.parquet.hadoop.{ParquetFileReader, ParquetFileWriter, ParquetOutputCommitter, ParquetOutputFormat}
+import org.apache.spark.internal.io.FileCommitProtocol
+import org.apache.spark.sql.execution.datasources.parquet.ParquetFileFormat
 
 /**
   * An output committer for writing Parquet files.  In stead of writing to the `_temporary` folder
@@ -37,18 +39,27 @@ import org.apache.parquet.hadoop.{ParquetFileReader, ParquetFileWriter, ParquetO
   *
   * *NOTE*
   *
-  *   NEVER use DirectParquetOutputCommitter when appending data, because currently there's
-  *   no safe way undo a failed appending job (that's why both `abortTask()` and `abortJob()` are
-  *   left empty).
+  * NEVER use DirectParquetOutputCommitter when appending data, because currently there's
+  * no safe way undo a failed appending job (that's why both `abortTask()` and `abortJob()` are
+  * left empty).
   */
 
 class DirectParquetOutputCommitter(outputPath: Path, context: TaskAttemptContext)
   extends ParquetOutputCommitter(outputPath, context) {
   val LOG = Log.getLog(classOf[ParquetOutputCommitter])
+  var jobId: Option[String] = None
 
   override def getWorkPath: Path = outputPath
 
-  override def abortTask(taskContext: TaskAttemptContext): Unit = {}
+  override def abortTask(taskContext: TaskAttemptContext): Unit = {
+    val fs = outputPath.getFileSystem(context.getConfiguration)
+    val split = taskContext.getTaskAttemptID.getTaskID.getId
+
+    val lists = fs.listStatus(outputPath, new PathFilter {
+      override def accept(path: Path): Boolean = path.getName.contains(f"-$split%05d")
+    })
+    lists.foreach(l => fs.delete(l.getPath, false))
+  }
 
   override def commitTask(taskContext: TaskAttemptContext): Unit = {}
 

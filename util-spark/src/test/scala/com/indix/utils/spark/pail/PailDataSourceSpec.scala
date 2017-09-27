@@ -5,9 +5,8 @@ import java.util
 import com.backtype.hadoop.pail.{PailFormatFactory, PailSpec, PailStructure}
 import com.backtype.support.{Utils => PailUtils}
 import com.google.common.io.Files
+import com.indix.utils.spark.SparkJobSpec
 import org.apache.commons.io.FileUtils
-import org.apache.spark.sql.SparkSession
-import org.scalatest.{BeforeAndAfterAll, FlatSpec}
 import org.scalatest.Matchers._
 
 import scala.collection.JavaConverters._
@@ -27,13 +26,8 @@ class UserPailStructure extends PailStructure[User] {
   override def deserialize(serialized: Array[Byte]): User = PailUtils.deserialize(serialized).asInstanceOf[User]
 }
 
-class PailDataSourceSpec extends FlatSpec with BeforeAndAfterAll with PailDataSource {
-  private var spark: SparkSession = _
-
-  override protected def beforeAll(): Unit = {
-    super.beforeAll()
-    spark = SparkSession.builder().master("local[2]").appName("PailDataSource").getOrCreate()
-  }
+class PailDataSourceSpec extends SparkJobSpec with PailDataSource {
+  override val appName: String = "PailDataSource"
 
   val userPailSpec = new PailSpec(PailFormatFactory.SEQUENCE_FILE, new UserPailStructure)
 
