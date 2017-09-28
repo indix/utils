@@ -22,6 +22,7 @@ import org.apache.hadoop.fs.{Path, PathFilter}
 import org.apache.hadoop.mapreduce.lib.output.FileOutputCommitter
 import org.apache.hadoop.mapreduce.{JobContext, TaskAttemptContext}
 import org.apache.parquet.Log
+import org.apache.parquet.hadoop.codec.CodecConfig
 import org.apache.parquet.hadoop.util.ContextUtil
 import org.apache.parquet.hadoop.{ParquetFileReader, ParquetFileWriter, ParquetOutputCommitter, ParquetOutputFormat}
 import org.apache.spark.internal.io.FileCommitProtocol
@@ -47,18 +48,21 @@ import org.apache.spark.sql.execution.datasources.parquet.ParquetFileFormat
 class DirectParquetOutputCommitter(outputPath: Path, context: TaskAttemptContext)
   extends ParquetOutputCommitter(outputPath, context) {
   val LOG = Log.getLog(classOf[ParquetOutputCommitter])
-  var jobId: Option[String] = None
 
   override def getWorkPath: Path = outputPath
 
   override def abortTask(taskContext: TaskAttemptContext): Unit = {
     val fs = outputPath.getFileSystem(context.getConfiguration)
     val split = taskContext.getTaskAttemptID.getTaskID.getId
+    try {
+      val lists = fs.listStatus(outputPath, new PathFilter {
+        override def accept(path: Path): Boolean = path.getName.contains(f"-$split%05d")
+      })
+      lists.foreach(l => fs.delete(l.getPath, false))
+    } catch {
+      case e: Throwable => LOG.warn(s"Cannot clean $outputPath. File does not exist")
+    }
 
-    val lists = fs.listStatus(outputPath, new PathFilter {
-      override def accept(path: Path): Boolean = path.getName.contains(f"-$split%05d")
-    })
-    lists.foreach(l => fs.delete(l.getPath, false))
   }
 
   override def commitTask(taskContext: TaskAttemptContext): Unit = {}
