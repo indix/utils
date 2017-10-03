@@ -30,9 +30,7 @@ class ParquetAvroDataSourceSpec extends SparkJobSpec with ParquetAvroDataSource 
 
     sampleDf.rdd.saveAvroInParquet(outputLocation, sampleDf.schema, CompressionCodecName.GZIP)
 
-    val sparkVal = spark
-
-    import sparkVal.implicits._
+    import sqlContext.implicits._
 
     val records: Array[SampleAvroRecord] = spark.read.parquet(outputLocation).as[SampleAvroRecord].collect()
 

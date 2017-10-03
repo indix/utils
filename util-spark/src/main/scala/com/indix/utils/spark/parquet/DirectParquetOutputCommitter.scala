@@ -29,7 +29,7 @@ import org.apache.spark.internal.io.FileCommitProtocol
 import org.apache.spark.sql.execution.datasources.parquet.ParquetFileFormat
 
 /**
-  * An output committer for writing Parquet files.  In stead of writing to the `_temporary` folder
+  * An output committer for writing Parquet files.  Instead of writing to the `_temporary` folder
   * like what parquet.hadoop.ParquetOutputCommitter does, this output committer writes data directly to the
   * destination folder.  This can be useful for data stored in S3, where directory operations are
   * relatively expensive.
@@ -41,8 +41,7 @@ import org.apache.spark.sql.execution.datasources.parquet.ParquetFileFormat
   * *NOTE*
   *
   * NEVER use DirectParquetOutputCommitter when appending data, because currently there's
-  * no safe way undo a failed appending job (that's why both `abortTask()` and `abortJob()` are
-  * left empty).
+  * no safe way undo a failed appending job.
   */
 
 class DirectParquetOutputCommitter(outputPath: Path, context: TaskAttemptContext)
@@ -54,11 +53,16 @@ class DirectParquetOutputCommitter(outputPath: Path, context: TaskAttemptContext
   override def abortTask(taskContext: TaskAttemptContext): Unit = {
     val fs = outputPath.getFileSystem(context.getConfiguration)
     val split = taskContext.getTaskAttemptID.getTaskID.getId
+
+    val lists = fs.listStatus(outputPath, new PathFilter {
+      override def accept(path: Path): Boolean = path.getName.contains(f"-$split%05d-")
+    })
     try {
-      val lists = fs.listStatus(outputPath, new PathFilter {
-        override def accept(path: Path): Boolean = path.getName.contains(f"-$split%05d")
-      })
-      lists.foreach(l => fs.delete(l.getPath, false))
+      lists.foreach {
+        l =>
+          LOG.error(s"Abort Task - Deleting ${l.getPath.toUri}")
+          fs.delete(l.getPath, false)
+      }
     } catch {
       case e: Throwable => LOG.warn(s"Cannot clean $outputPath. File does not exist")
     }

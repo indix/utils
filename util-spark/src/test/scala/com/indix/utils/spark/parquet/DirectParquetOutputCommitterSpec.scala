@@ -1,6 +1,7 @@
 package com.indix.utils.spark.parquet
 
 import java.io.File
+import java.nio.file.{Files, Paths}
 
 import com.indix.utils.spark.SparkJobSpec
 import org.apache.commons.io.FileUtils
@@ -24,7 +25,6 @@ class TestDirectParquetOutputCommitter(outputPath: Path, context: TaskAttemptCon
 
 class DirectParquetOutputCommitterSpec extends SparkJobSpec with Matchers {
   override val appName = "DirectParquetOutputCommitterSpec"
-  override val taskRetries = 2
   override val sparkConf = Map(("spark.sql.parquet.output.committer.class", "com.indix.utils.spark.parquet.TestDirectParquetOutputCommitter"))
   var file: File = _
 
@@ -39,15 +39,20 @@ class DirectParquetOutputCommitterSpec extends SparkJobSpec with Matchers {
   }
 
   it should "not fail with file already exists on subsequent retries" in {
-    lazy val result = sqlContext
-      .range(10)
-      .toDF()
-      .write
-      .mode(SaveMode.Overwrite)
-      .parquet(file.toString)
+    try {
+      sqlContext
+        .range(10)
+        .toDF()
+        .write
+        .mode(SaveMode.Overwrite)
+        .parquet(file.toString)
+    } catch {
+      case e: Exception => println(e)
+    } finally {
+      val successPath = Paths.get(file.toString + "/_SUCCESS")
+      Files.exists(successPath) should be(true)
+    }
 
-    //Subsequent retry of task will not throw an exception
-    noException should be thrownBy result
   }
 
 }
