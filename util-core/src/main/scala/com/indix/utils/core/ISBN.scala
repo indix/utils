@@ -9,7 +9,7 @@ case class ISBN(isbn: String, isbn10: Option[String] = None) {
 object ISBN {
   def apply(input: String): Option[ISBN] = {
     Some(input)
-      .filter(x => !StringUtils.isEmpty(x))
+      .filter(!StringUtils.isEmpty(_))
       .map(clean)
       .flatMap {
         case x if isValidIsbn10(x) =>
@@ -38,8 +38,7 @@ object ISBN {
   private def calculateCheckDigit10(input: String) = {
     val sum = input.dropRight(1).map(_ - '0').zip(10 to 2 by -1).foldLeft(0)((i: Int, tuple: (Int, Int)) => i + tuple._1 * tuple._2)
     val checkDigit = (11 - sum % 11) % 11
-    val checkDigitChar = if(checkDigit == 10) 'X' else (checkDigit + '0').toChar
-    checkDigitChar
+    if (checkDigit == 10) 'X' else (checkDigit + '0').toChar
   }
 
   private def isbn10to13(input: String) = {
