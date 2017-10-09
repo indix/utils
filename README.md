@@ -2,22 +2,13 @@
 [![Build Status](https://travis-ci.org/indix/utils.svg?branch=master)](https://travis-ci.org/indix/utils)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.indix/utils_2.11/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.indix/utils_2.11)
 
-Scala utils for anything and everything
-
-
-Scaladoc [here](http://oss.indix.com/utils/latest/api/)
-
-# Requirements
-
-Java 1.7 or later.
-Currently published only for scala-2.11.
-
+Scala utils for anything and everything.
 
 # Using in your project
 
 ## util-core
 
-`"com.indix" %% "util-core" % "0.2.36"`
+`"com.indix" %% "util-core" % "v0.5.0"`
 
 # License
 
