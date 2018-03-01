@@ -14,7 +14,7 @@ lazy val commonSettings = Seq(
   resolvers ++= Seq(
     "Clojars" at "http://clojars.org/repo",
     "Concurrent Maven Repo" at "http://conjars.org/repo",
-    "Twttr Maven Repo" at "http://maven.twttr.com/"
+    "Twttr Maven Repo" at "https://maven.twttr.com/"
   )
 )
 
