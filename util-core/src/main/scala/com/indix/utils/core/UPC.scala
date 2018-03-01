@@ -4,22 +4,23 @@ import org.apache.commons.lang3.StringUtils
 
 import scala.util.Try
 
-case class UPC(rawUpc: Long) {
+object UPC {
 
   /**
     * Standardizes a UPC in the GTIN-14 format
+    * If the given string is not a valid UPC, the method throws an `IllegalArgumentException`
     * @return - Standardized UPC
     */
 
-  def standardize : String = {
+  def standardize(rawUpc: String) : String = {
 
-    def standardizeRec(input: String) : String = {
+    def standardizeRec(input: String, isPadded : Boolean = false) : String = {
       if (input.length < 12) {
-        standardizeRec(leftPadZeroes(input, 12))
+        standardizeRec(leftPadZeroes(input, 12), true)
       }
       else if (input.length == 12) {
         val cDigit = calculateCheckDigit(input.substring(0, 11))
-        if (input.last == cDigit + '0') {
+        if (input.last == cDigit + '0' && isPadded) {
           input
         } else {
           val cDigit13 = calculateCheckDigit(leftPadZeroes(input, 13))
@@ -30,7 +31,9 @@ case class UPC(rawUpc: Long) {
       }
     }
 
-    leftPadZeroes(standardizeRec(rawUpc.toString), 14)
+    val cleanedUpc = verifyValidUpc(clean(rawUpc))
+
+    leftPadZeroes(standardizeRec(cleanedUpc, cleanedUpc.head == '0'), 14)
   }
 
   private def calculateCheckDigit(input: String) = {
@@ -52,23 +55,7 @@ case class UPC(rawUpc: Long) {
 
   private def leftPadZeroes(s: String, length: Int) = StringUtils.leftPad(s, length, '0')
 
-}
-
-object UPC {
-
-  /**
-    * Parses a valid UPC string to a standardized UPC (GTIN-14)
-    * If the given string is not a valid UPC, the method throws an `IllegalArgumentException`
-    */
-
-  def apply(input: String) = {
-    val rawUpc = verifyValidUpc(clean(input))
-    new UPC(rawUpc.toLong)
-  }
-
-  private def clean(input: String) = {
-    input.replaceAll("-", "")
-  }
+  private def clean(input: String) = input.replaceAll("-", "")
 
 
   private def verifyValidUpc(input: String) = {
