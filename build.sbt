@@ -112,7 +112,8 @@ lazy val sparkUtils = (project in file("util-spark")).
       "org.apache.hadoop" % "hadoop-aws" % "2.6.0",
       "com.indix" % "dfs-datastores" % "2.0.21" excludeAll(
         ExclusionRule(organization = "org. apache.hadoop"),
-        ExclusionRule(organization = "org.eclipse.jetty")
+        ExclusionRule(organization = "org.eclipse.jetty"),
+        ExclusionRule(organization = "com.hadoop.gplcompression")
         ),
       "org.apache.parquet" % "parquet-avro" % "1.8.1",
       "org.bdgenomics.utils" %% "utils-misc" % "0.2.13"
