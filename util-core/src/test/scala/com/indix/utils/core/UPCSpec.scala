@@ -6,10 +6,9 @@ class UPCSpec extends FlatSpec with Matchers {
 
   it should "convert a UPC to a standardized format" in {
     UPC.standardize("63938200039") should be("00639382000393")
-    UPC.standardize("97850001830") should be("00978500018309")
-    UPC.standardize("934093502349") should be("09340935023493")
     UPC.standardize("99999999623") should be("00999999996237")
     UPC.standardize("89504500098") should be("00895045000982")
+    UPC.standardize("934093502349") should be("09340935023493")
     UPC.standardize("841106172217") should be("08411061722176")
     UPC.standardize("810000439") should be("00008100004393")
     UPC.standardize("931177059140") should be("09311770591409")
@@ -18,16 +17,22 @@ class UPCSpec extends FlatSpec with Matchers {
     UPC.standardize("75317405253") should be("00753174052534")
     UPC.standardize("-810000439") should be("00008100004393")
     UPC.standardize("810-000-439") should be("00008100004393")
-    UPC.standardize("9780316512787") should be("09780316512787")
-    UPC.standardize("9780997355932") should be("09780997355932")
+
+    // Iphone UPCs
+    UPC.standardize("885909950652") should be("00885909950652")
+    UPC.standardize("715660702866") should be("00715660702866")
   }
 
-  it should "add check-digit if UPC not left padded and check-digit and last-digit same" in {
-    UPC.standardize("978052549832") should be("09780525498322")
+
+  it should "work correctly for ISBN numbers" in {
+    UPC.standardize("978052549832") should be("9780525498322")
+    UPC.standardize("9780500517260") should be("9780500517260")
+    UPC.standardize("9780316512787") should be("9780316512787")
+    UPC.standardize("9780997355932") should be("9780997355932")
   }
 
   it should "not replace check-digit if UPC already left padded and check-digit and last-digit same" in {
-      UPC.standardize("0753174052534") should be("00753174052534")
+    UPC.standardize("0753174052534") should be("00753174052534")
   }
 
   it should "fail for all zeroes UPC" in {

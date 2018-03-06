@@ -14,13 +14,13 @@ object UPC {
 
   def standardize(rawUpc: String) : String = {
 
-    def standardizeRec(input: String, isPadded : Boolean = false) : String = {
+    def standardizeRec(input: String) : String = {
       if (input.length < 12) {
-        standardizeRec(leftPadZeroes(input, 12), true)
+        standardizeRec(leftPadZeroes(input, 12))
       }
       else if (input.length == 12) {
         val cDigit = calculateCheckDigit(input.substring(0, 11))
-        if (input.last == cDigit + '0' && isPadded) {
+        if (input.last == cDigit + '0' && !isIsbn(input)) {
           input
         } else {
           val cDigit13 = calculateCheckDigit(leftPadZeroes(input, 13))
@@ -33,7 +33,17 @@ object UPC {
 
     val cleanedUpc = verifyValidUpc(clean(rawUpc))
 
-    leftPadZeroes(standardizeRec(cleanedUpc, cleanedUpc.head == '0'), 14)
+    if(isIsbn(rawUpc)) {
+      leftPadZeroes(standardizeRec(cleanedUpc), 13)
+    } else {
+      leftPadZeroes(standardizeRec(cleanedUpc), 14)
+    }
+
+
+  }
+
+  private def isIsbn(input: String) = {
+    input.startsWith("978") || input.startsWith("979")
   }
 
   private def calculateCheckDigit(input: String) = {
