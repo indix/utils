@@ -30,4 +30,9 @@ object MPN {
     if (words.length < 2) false
     else words.forall(w => w == WordUtils.capitalizeFully(w) && !StringUtils.isNumeric(w))
   }
+
+  def standardizeMPN(input: String): String = {
+    if (isValidIdentifier(input)) input
+    else ""
+  }
 }

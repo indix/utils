@@ -30,4 +30,9 @@ class MPNTest extends FlatSpec with Matchers {
     MPN.isValidIdentifier("PJS2V") should be (true)
   }
 
+  it should "standardize MPN" in {
+    MPN.standardizeMPN("Does not apply") should be ("")
+    MPN.standardizeMPN("PJS2V") should be ("PJS2V")
+  }
+
 }
