@@ -2,7 +2,7 @@ package com.indix.utils.core
 
 import org.scalatest.{FlatSpec, Matchers}
 
-class MPNTest extends FlatSpec with Matchers {
+class MPNSpec extends FlatSpec with Matchers {
 
   behavior of "MPN"
 
@@ -33,6 +33,8 @@ class MPNTest extends FlatSpec with Matchers {
   it should "standardize MPN" in {
     MPN.standardizeMPN("Does not apply") should be ("")
     MPN.standardizeMPN("PJS2V") should be ("PJS2V")
+    MPN.standardizeMPN("105200010437-07-70% All Windows") should be ("105200010437-07-70")
+    MPN.standardizeMPN("30634190, 30753839, 31253006") should be ("30634190")
   }
 
 }

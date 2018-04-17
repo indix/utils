@@ -5,7 +5,7 @@ import org.apache.commons.lang3.text.WordUtils
 
 object MPN {
   // Some domain specific keywords known to be invalid
-  val BlackListedMpns = Set("unknown", "none", "does not apply", "non applicable", "various")
+  val BlackListedMpns = Set("unknown", "none", "does not apply", "non applicable", "na", "n/a", "various")
 
   val StopChars = Set(' ', '-', '_', '.', '/')
   val TerminateChars = Set(',', '"', '*', '%')
@@ -32,7 +32,12 @@ object MPN {
   }
 
   def standardizeMPN(input: String): String = {
-    if (isValidIdentifier(input)) input
+    if (isValidIdentifier(input)) {
+      input
+    }
+    else if (input.indexWhere(c => TerminateChars.contains(c)) > 0) {
+      input.substring(0, input.indexWhere(c => TerminateChars.contains(c)))
+    }
     else ""
   }
 }
