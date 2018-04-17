@@ -15,7 +15,7 @@ object MPN {
 
   def isValidIdentifier(input: String): Boolean = {
     input match {
-      case _ if input.length > MaxLen || input.length < MinLen => false
+      case _ if StringUtils.isBlank(input) || input.length > MaxLen || input.length < MinLen => false
       case _ if input.count(c => TerminateChars.contains(c)) > 1 => false
       case _ if BlackListedMpns.contains(input.toLowerCase) => false
       case _ if isTitleCase(input) => false
@@ -31,13 +31,14 @@ object MPN {
     else words.forall(w => w == WordUtils.capitalizeFully(w) && !StringUtils.isNumeric(w))
   }
 
-  def standardizeMPN(input: String): String = {
+  def standardizeMPN(input: String): Option[String] = {
     if (isValidIdentifier(input)) {
-      input
+      Some(input)
+    } else if (StringUtils.isBlank(input)) {
+      None
+    } else if (input.indexWhere(c => TerminateChars.contains(c)) > 0) {
+      Some(input.substring(0, input.indexWhere(c => TerminateChars.contains(c))))
     }
-    else if (input.indexWhere(c => TerminateChars.contains(c)) > 0) {
-      input.substring(0, input.indexWhere(c => TerminateChars.contains(c)))
-    }
-    else ""
+    else None
   }
 }

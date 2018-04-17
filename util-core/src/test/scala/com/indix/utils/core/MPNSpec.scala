@@ -17,6 +17,7 @@ class MPNSpec extends FlatSpec with Matchers {
   }
 
   it should "validate identifier" in {
+    MPN.isValidIdentifier(null) should be (false)
     MPN.isValidIdentifier("") should be (false)
     MPN.isValidIdentifier("51") should be (false)
     MPN.isValidIdentifier("NA") should be (false)
@@ -31,10 +32,12 @@ class MPNSpec extends FlatSpec with Matchers {
   }
 
   it should "standardize MPN" in {
-    MPN.standardizeMPN("Does not apply") should be ("")
-    MPN.standardizeMPN("PJS2V") should be ("PJS2V")
-    MPN.standardizeMPN("105200010437-07-70% All Windows") should be ("105200010437-07-70")
-    MPN.standardizeMPN("30634190, 30753839, 31253006") should be ("30634190")
+    MPN.standardizeMPN(null) should be (None)
+    MPN.standardizeMPN("Does not apply") should be (None)
+    MPN.standardizeMPN("PJS2V") should be (Some("PJS2V"))
+
+    MPN.standardizeMPN("105200010437-07-70% All Windows") should be (Some("105200010437-07-70"))
+    MPN.standardizeMPN("30634190, 30753839, 31253006") should be (Some("30634190"))
   }
 
 }
