@@ -38,6 +38,7 @@ class MPNSpec extends FlatSpec with Matchers {
 
     MPN.standardizeMPN("105200010437-07-70% All Windows") should be (Some("105200010437-07-70"))
     MPN.standardizeMPN("30634190, 30753839, 31253006") should be (Some("30634190"))
+    MPN.standardizeMPN("mr16r082gbn1-ck8 ") should be (Some("MR16R082GBN1-CK8"))
   }
 
 }
