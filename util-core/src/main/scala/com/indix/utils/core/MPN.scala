@@ -31,13 +31,18 @@ object MPN {
     else words.forall(w => w == WordUtils.capitalizeFully(w) && !StringUtils.isNumeric(w))
   }
 
+  def postProcessIdentifier(input: String): String = {
+    val trimmedUpper = input.trim.toUpperCase
+    trimmedUpper
+  }
+
   def standardizeMPN(input: String): Option[String] = {
     if (isValidIdentifier(input)) {
-      Some(input)
+      Some(postProcessIdentifier(input))
     } else if (StringUtils.isBlank(input)) {
       None
     } else if (input.indexWhere(c => TerminateChars.contains(c)) > 0) {
-      Some(input.substring(0, input.indexWhere(c => TerminateChars.contains(c))))
+      Some(postProcessIdentifier(input.substring(0, input.indexWhere(c => TerminateChars.contains(c)))))
     }
     else None
   }
