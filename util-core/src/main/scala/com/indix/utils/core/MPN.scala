@@ -3,9 +3,11 @@ package com.indix.utils.core
 import org.apache.commons.lang3.StringUtils
 import org.apache.commons.lang3.text.WordUtils
 
+import scala.io.Source
+
 object MPN {
   // Some domain specific keywords known to be invalid
-  val BlackListedMpns = Set("unknown", "none", "does not apply", "non applicable", "na", "n/a", "various")
+  val BlackListedMpns = Source.fromInputStream(getClass.getResourceAsStream("/BlacklistMPNs.txt")).getLines.toSet
 
   val StopChars = Set(' ', '-', '_', '.', '/')
   val TerminateChars = Set(',', '"', '*', '%')
@@ -28,11 +30,11 @@ object MPN {
 
   def isValidIdentifier(value: String): Boolean = validateIdentifier(value)._1
 
-  // Does not consider numbers or one word strings as title-case phrase
+  // Does not consider one word strings as title-case phrase
   def isTitleCase(str: String): Boolean = {
     val words = str.split(' ').filter(_.nonEmpty)
     if (words.length < 2) false
-    else words.forall(w => w == WordUtils.capitalizeFully(w) && !StringUtils.isNumeric(w))
+    else words.forall(w => w == WordUtils.capitalizeFully(w))
   }
 
   def postProcessIdentifier(input: String): String = {
