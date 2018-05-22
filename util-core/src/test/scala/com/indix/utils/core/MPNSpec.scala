@@ -35,11 +35,12 @@ class MPNSpec extends FlatSpec with Matchers {
   it should "standardize MPN" in {
     MPN.standardizeMPN(null) should be (None)
     MPN.standardizeMPN("Does not apply") should be (None)
-    MPN.standardizeMPN("PJS2V") should be (Some("PJS2V"))
     MPN.standardizeMPN("All Windows %22") should be (None)
     MPN.standardizeMPN("Samsung Galaxy Note 5") should be (None)
     MPN.standardizeMPN("A Square") should be (None)
+    MPN.standardizeMPN("{{availableProducts[0].sku}}") should be (None)
 
+    MPN.standardizeMPN("PJS2V") should be (Some("PJS2V"))
     MPN.standardizeMPN("30634190, 30753839, 31253006") should be (Some("30634190"))
     MPN.standardizeMPN("mr16r082gbn1-ck8 ") should be (Some("MR16R082GBN1-CK8"))
     MPN.standardizeMPN("SM-G950FZDAXSA") should be (Some("SM-G950FZDAXSA"))
