@@ -3,15 +3,29 @@ package com.indix.utils.core
 import org.apache.commons.lang3.StringUtils
 import org.apache.commons.lang3.text.WordUtils
 
+import scala.io.Source
+
 object MPN {
   // Some domain specific keywords known to be invalid
-  val BlackListedMpns = Set("unknown", "none", "does not apply", "non applicable", "na", "n/a", "various")
+  val BlackListedMpns = Source.fromInputStream(getClass.getResourceAsStream("/BlacklistMPNs.txt")).getLines.toSet
 
   val StopChars = Set(' ', '-', '_', '.', '/')
-  val TerminateChars = Set(',', '"', '*', '%')
+  val TerminateChars = Set(',', '"', '*', '%', '{', '}', "#", '&', '\\')
 
   val MaxLen = 50
   val MinLen = 3
+
+  // Does not consider one word strings as title-case phrase
+  def isTitleCase(str: String): Boolean = {
+    val words = str.split(' ').filter(_.nonEmpty)
+    if (words.length < 2) false
+    else words.forall(w => w == WordUtils.capitalizeFully(w))
+  }
+
+  def postProcessIdentifier(input: String): String = {
+    val trimmedUpper = input.trim.toUpperCase
+    trimmedUpper
+  }
 
   // Check if identifier is valid, also return the identifier to process further if any
   def validateIdentifier(text: String): (Boolean, String) = {
@@ -28,22 +42,10 @@ object MPN {
 
   def isValidIdentifier(value: String): Boolean = validateIdentifier(value)._1
 
-  // Does not consider numbers or one word strings as title-case phrase
-  def isTitleCase(str: String): Boolean = {
-    val words = str.split(' ').filter(_.nonEmpty)
-    if (words.length < 2) false
-    else words.forall(w => w == WordUtils.capitalizeFully(w) && !StringUtils.isNumeric(w))
-  }
-
-  def postProcessIdentifier(input: String): String = {
-    val trimmedUpper = input.trim.toUpperCase
-    trimmedUpper
-  }
-
   def standardizeMPN(input: String): Option[String] = {
     val (isValid, identifier) = validateIdentifier(input)
     if (isValid) {
-      Some(postProcessIdentifier(input))
+      Some(postProcessIdentifier(identifier))
     } else if (StringUtils.isBlank(identifier)) {
       None
     } else if (identifier.indexWhere(c => TerminateChars.contains(c)) > 0) {

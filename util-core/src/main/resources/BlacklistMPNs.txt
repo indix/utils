@@ -1,0 +1,35 @@
+#na
+...
+as shown in image
+default
+do not apply
+does not apply
+doesnotapply
+dose not apply
+false
+generic
+model
+mpn:
+n/a
+na
+new
+no aplicable
+no mpn
+non applicabile
+non applicable
+none
+not
+not applicable
+null
+other
+others
+see options
+select your model using the list
+select your model using the menu
+selectdesiredmodel
+true
+unbranded
+unbranded/generic
+universal
+unknown
+various
