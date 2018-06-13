@@ -6,6 +6,8 @@ import scala.util.Try
 
 object UPC {
 
+  def isValid(input: String) = Try(standardize(input)).map(_ == input).toOption.getOrElse(false)
+
   /**
     * Standardizes a UPC in the GTIN-14 format
     * If the given string is not a valid UPC, the method throws an `IllegalArgumentException`

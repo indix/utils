@@ -23,6 +23,14 @@ class UPCSpec extends FlatSpec with Matchers {
     UPC.standardize("715660702866") should be("00715660702866")
   }
 
+  it should "check if the input UPC is valid as checked by UPCItemDB" in {
+    UPC.isValid("0420160002247") should be(false)
+    UPC.isValid("000000010060") should be(false)
+    // the above same UPCs are validated after standardizing them
+    UPC.isValid(UPC.standardize("0420160002247")) should be(true)
+    UPC.isValid(UPC.standardize("000000010060")) should be(true)
+  }
+
   it should "work correctly for GTIN UPCs by converting it to a valid EAN-13 with padded zeros" in {
     UPC.standardize("10010942220401") should be ("00010942220404")
     UPC.standardize("47111850104013") should be("07111850104015")
