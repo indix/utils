@@ -10,7 +10,7 @@ lazy val commonSettings = Seq(
   organizationHomepage := Some(url("http://www.indix.com")),
   scalaVersion := "2.11.11",
   scalacOptions ++= Seq("-encoding", "UTF-8", "-deprecation", "-unchecked"),
-  javacOptions ++= Seq("-Xlint:deprecation", "-source", "1.8"),
+  javacOptions ++= Seq("-Xlint:deprecation", "-source", "1.6"),
   resolvers ++= Seq(
     "Clojars" at "http://clojars.org/repo",
     "Concurrent Maven Repo" at "http://conjars.org/repo",
@@ -133,6 +133,7 @@ lazy val gocdUtils = (project in file("util-gocd")).
       "com.google.code.gson" % "gson" % "2.2.3",
       "junit" % "junit" % "4.12" % Test,
       "com.novocode" % "junit-interface" % "0.11" % Test,
-      "org.mockito" % "mockito-all" % "1.10.19" % Test
+      "org.mockito" % "mockito-all" % "1.10.19" % Test,
+      "org.scalatest" %% "scalatest" % "3.0.3" % Test
     )
   )
