@@ -13,7 +13,7 @@ import com.indix.gocd.utils.store.S3ArtifactStore.getS3client
 import scala.collection.JavaConversions._
 
 /**
-  * Lists objects, finds latest in s3 bucket
+  * Lists objects, finds latest, gets objects from S3
   *
   * @param client
   * @param bucket

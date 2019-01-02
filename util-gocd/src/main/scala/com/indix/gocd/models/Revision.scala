@@ -2,7 +2,7 @@ package com.indix.gocd.models
 
 /**
   * Represents revision
-  * Parses revision string to pupulate fields
+  * Parses revision string to populate fields
   *
   * @param revision
   */
