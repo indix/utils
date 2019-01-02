@@ -12,6 +12,13 @@ import com.indix.gocd.utils.store.S3ArtifactStore.getS3client
 
 import scala.collection.JavaConversions._
 
+/**
+  * Lists objects, finds latest in s3 bucket
+  *
+  * @param client
+  * @param bucket
+  * @param storageClass
+  */
 class S3ArtifactStore(client: AmazonS3 = getS3client(new GoEnvironment()), bucket: String, storageClass: StorageClass = StorageClass.Standard) {
 
   def withStorageClass(storageClass: String): S3ArtifactStore = {
@@ -24,6 +31,12 @@ class S3ArtifactStore(client: AmazonS3 = getS3client(new GoEnvironment()), bucke
     }
   }
 
+  /**
+    * Puts object request in client
+    *
+    * @param putObjectRequest
+    * @return
+    */
   def put(putObjectRequest: PutObjectRequest): PutObjectResult = {
     putObjectRequest.setStorageClass(this.storageClass)
     client.putObject(putObjectRequest)
@@ -39,6 +52,13 @@ class S3ArtifactStore(client: AmazonS3 = getS3client(new GoEnvironment()), bucke
 
   def pathString(pathOnS3: String): String = String.format("s3://%s/%s", bucket, pathOnS3)
 
+  /**
+    * Gets objects from path and puts in the destination
+    *
+    * @param from
+    * @param to
+    * @return
+    */
   def get(from: String, to: String): ObjectMetadata = {
     val getObjectRequest = new GetObjectRequest(bucket, from)
     val destinationFile = new File(to)

@@ -1,5 +1,11 @@
 package com.indix.gocd.models
 
+/**
+  * Represents revision
+  * Parses revision string to pupulate fields
+  *
+  * @param revision
+  */
 case class Revision(revision: String) extends Ordered[Revision] {
 
   val parts: Seq[String] = revision.split("\\.")
@@ -10,16 +16,6 @@ case class Revision(revision: String) extends Ordered[Revision] {
     else 0
   }
 
-//  override def compareTo(that: Revision): Int = {
-//    val majorDiff = this.major.compareTo(that.major)
-//    val minorDiff = this.minor.compareTo(that.minor)
-//    val patchDiff = this.patch.compareTo(that.patch)
-//
-//    if (majorDiff != 0) majorDiff
-//    else if (minorDiff != 0) minorDiff
-//    else if (patchDiff != 0) patchDiff
-//    else 0
-//  }
   override def compare(that: Revision): Int = {
   val majorDiff = this.major.compareTo(that.major)
       val minorDiff = this.minor.compareTo(that.minor)

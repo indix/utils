@@ -13,8 +13,6 @@ case class Context(environmentVariables: Map[String, String], workingDir: String
   def printEnvironment(): Unit = console.printEnvironment(environmentVariables.asJava)
 
   def getAbsoluteWorkingDir: String = Paths.get("").toAbsolutePath.resolve(workingDir).toString
-
-//  def this(context: java.util.Map[String, Object]) = this(context.asScala)
 }
 
 object Context {
