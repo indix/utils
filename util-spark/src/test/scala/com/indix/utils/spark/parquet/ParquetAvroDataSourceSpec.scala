@@ -3,30 +3,16 @@ package com.indix.utils.spark.parquet
 import java.io.File
 
 import com.google.common.io.Files
+import com.indix.utils.spark.SparkJobSpec
 import com.indix.utils.spark.parquet.avro.ParquetAvroDataSource
 import org.apache.commons.io.FileUtils
-import org.apache.spark.sql.SparkSession
-import org.scalatest.{BeforeAndAfterAll, FlatSpec}
-import org.scalatest.Matchers.{be, convertToAnyShouldWrapper}
 import org.apache.parquet.hadoop.metadata.CompressionCodecName
+import org.scalatest.Matchers.{be, convertToAnyShouldWrapper}
 
 case class SampleAvroRecord(a: Int, b: String, c: Seq[String], d: Boolean, e: Double, f: collection.Map[String,String], g: Seq[Byte])
 
-class ParquetAvroDataSourceSpec extends FlatSpec with BeforeAndAfterAll with ParquetAvroDataSource {
-  private var spark: SparkSession = _
-
-  override protected def beforeAll(): Unit = {
-    super.beforeAll()
-    spark = SparkSession.builder().master("local[2]").appName("ParquetAvroDataSource").getOrCreate()
-  }
-
-  override protected def afterAll(): Unit = {
-    try {
-      spark.sparkContext.stop()
-    } finally {
-      super.afterAll()
-    }
-  }
+class ParquetAvroDataSourceSpec extends SparkJobSpec with ParquetAvroDataSource {
+  override val appName = "ParquetAvroDataSource"
 
   "AvroBasedParquetDataSource" should "read/write avro records as ParquetData" in {
 
@@ -44,9 +30,7 @@ class ParquetAvroDataSourceSpec extends FlatSpec with BeforeAndAfterAll with Par
 
     sampleDf.rdd.saveAvroInParquet(outputLocation, sampleDf.schema, CompressionCodecName.GZIP)
 
-    val sparkVal = spark
-
-    import sparkVal.implicits._
+    import sqlContext.implicits._
 
     val records: Array[SampleAvroRecord] = spark.read.parquet(outputLocation).as[SampleAvroRecord].collect()
 
