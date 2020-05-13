@@ -4,7 +4,7 @@ import java.nio.ByteBuffer
 import java.sql.Timestamp
 import java.util
 
-import com.databricks.spark.avro.SchemaConverters
+import org.apache.spark.sql.avro.SchemaConverters
 import org.apache.avro.generic.GenericData.Record
 import org.apache.avro.generic.{GenericRecord, IndexedRecord}
 import org.apache.avro.{Schema, SchemaBuilder}
@@ -23,18 +23,19 @@ import scala.reflect.ClassTag
 
 class AvroFormatter extends Serializable {
   /**
-    * This function constructs converter function for a given sparkSQL datatype. This is used in
-    * writing Avro records out to disk
-    */
+   * This function constructs converter function for a given sparkSQL datatype. This is used in
+   * writing Avro records out to disk
+   */
   def createConverterToAvro(
-                                     dataType: DataType,
-                                     structName: String,
-                                     recordNamespace: String): (Any) => Any = {
+                             dataType: DataType,
+                             structName: String,
+                             recordNamespace: String): (Any) => Any = {
     dataType match {
-      case BinaryType => (item: Any) => item match {
-        case null => null
-        case bytes: Array[Byte] => ByteBuffer.wrap(bytes)
-      }
+      case BinaryType => (item: Any) =>
+        item match {
+          case null => null
+          case bytes: Array[Byte] => ByteBuffer.wrap(bytes)
+        }
       case ByteType | ShortType | IntegerType | LongType |
            FloatType | DoubleType | StringType | BooleanType => identity
       case _: DecimalType => (item: Any) => if (item == null) null else item.toString
@@ -71,9 +72,8 @@ class AvroFormatter extends Serializable {
           }
         }
       case structType: StructType =>
-        val builder = SchemaBuilder.record(structName).namespace(recordNamespace)
-        val schema: Schema = SchemaConverters.convertStructToAvro(
-          structType, builder, recordNamespace)
+        val schema: Schema = SchemaConverters.toAvroType(
+          structType,nullable = false, structName, recordNamespace)
         val fieldConverters = structType.fields.map(field =>
           createConverterToAvro(field.dataType, field.name, recordNamespace))
         (item: Any) => {
@@ -115,7 +115,7 @@ trait ParquetAvroDataSource {
       AvroParquetOutputFormat.setSchema(job, schema)
       ParquetOutputFormat.setCompression(job, compression)
       ParquetOutputFormat.setPageSize(job, 32 * 1024 * 1024) // 128 MB seems way too large
-      val outputFormatter = if(useDFOC) classOf[ParquetAvroOutputFormatWithDFOC] else classOf[AvroParquetOutputFormat[GenericRecord]]
+      val outputFormatter = if (useDFOC) classOf[ParquetAvroOutputFormatWithDFOC] else classOf[AvroParquetOutputFormat[GenericRecord]]
       rdd.map(r => null.asInstanceOf[Void] -> r)
         .saveAsNewAPIHadoopFile(outputLocation, classOf[Void], classOf[IndexedRecord], outputFormatter, ContextUtil.getConfiguration(job))
     }
@@ -137,8 +137,7 @@ trait ParquetAvroDataSource {
 
   def toAvroSchema(schema: StructType): Schema = {
     val recordNamespace = ""
-    val build = SchemaBuilder.record("topLevelRecord").namespace(recordNamespace)
-    SchemaConverters.convertStructToAvro(schema, build, recordNamespace)
+    SchemaConverters.toAvroType(schema,nullable = false, "topLevelRecord", recordNamespace)
   }
 
 }
