@@ -1,34 +1,34 @@
 language: scala
 scala:
-- 2.11.11
-- 2.12.11
+  - 2.11.11
+  - 2.12.11
 jdk: openjdk8
 sudo: false
 cache:
   directories:
-  - "$HOME/.ivy2/cache"
-  - "$HOME/.sbt"
+    - "$HOME/.ivy2/cache"
+    - "$HOME/.sbt"
 before_cache:
-- find $HOME/.ivy2/cache -name "ivydata-*.properties" -print -delete
-- find $HOME/.sbt        -name "*.lock"               -print -delete
+  - find $HOME/.ivy2/cache -name "ivydata-*.properties" -print -delete
+  - find $HOME/.sbt        -name "*.lock"               -print -delete
 env:
   global:
-  - BUILD_LABEL=1.0.${TRAVIS_BUILD_NUMBER}
-  - secure: pQPYXlJp86IIELAHf48ri2Q7oDISCgA137fT9wTiozlu+5YjwY9wUa+OEbDvKG1RBeqK5aWFP8KWRfoD1CEpTeLg8h+ElvX+JRhUuQS8GaX1Ev4i79YOxnLP1d/K74SEpqM3dWpacuZzP2TlYv9nGSuxC7U2PpxP54ShjBPeaAw3G7lES/vFPIdVhDXjNEjwpjfl/Fy9AanBf1f7souX/7GXVmdvg+NIDkp0ALryD7hfz38HYEd6B1RrLqqNgVFqrbSoh9bmPA9BXt8gjytEAaKkb3hB7X5Sl0Yw3xwaZzNEkxwZSSP/Z80vUJZpwAnr3TAc54yiVKx64N0CoH/kzv7FGX2fn5P4tFmwEYnsqZZvJXQ64fILHOzqiTKho2qSXA1DRsd6RD/DUME24PEpmZPmFCj7ujNuc6L15oFqIU4mSiog6HJFn8dXZAWHWJNgfgipbe/7jT8PwCigMtFsrSPgiKau39rZ3wL9jmhzUGqsGEWaWapuXdcyrG+Erzngh7Z5VI/c6Z7OLQ3zIpDBFXYenB6PV+gFqvH8Cafmb08h85a3Jnp4Va8ml9GJlTf1aNgaITSxzCEQO1RZZgrwS5Z+fu4N9J8hFWk/mou3r9nOazJ+wkGCcudQaBhl70gHluM09yaFRF5+7NjwcTMvRmdGkfA1tCnwsF/xVghci2I=
-  - secure: akbuJ5hN9AWCL+pdsgxV6dUtg318SWK3TgUg9mJ/3ix7L6aNQWb670bYJHA9VCGxX4glzRdzJttu+7PVebbngPpdXTu6TAE3CabZbV0rarPqszvtRPBQmXtA/n36TO4VwHBJdCT3UaOxp2j3pocjqxHujZ1WPS5oUg/LY07HN6y/dgwC01j7CYK6Se7//QUs45KuKcyZkTCZO4qj4Mb+fyUehWoMaq0Ivlflj91CPr/QsIBw/y2zIKlQD/Z07EQx0fVwdhkcapH3iOj2dNoKO40Jx8B2/64OpHnH3w8ycA+QdTWgmrhGbJnhyA+WXVSPTyzIluSJFiseTJPuNH1fJ5sBlN27fPngiEEy9sFhRo/ia1riZwOB1iLqWWv1pquBJHHXYy/PwTWMee8trIjw6LVgTp4tBeLLqoHXJv5z6qubakRbqc8sxSVLXEV+DyxQJ0bcn3ywCTLikhABuRIJPfwK+ekrS3b5KLnw/9mbyaSa/UP2Ko7KAQtdjKeJz5MZ8yRTdO1PI804wUqJKjLQyka9FXY3FvbO8vjkGO1uK7nny19NRDwB65nMD/HywhA2NwHNnyzlpFtw3ZCIJ/qUNW0Qnp34YYBAAYHbq/nTtOklBcPDB3qYW5WA59nPqeU+1RzMZOnYHNKEl5ahtdlituKSy/RrwTh9zMH5eQsGiYA=
-  - secure: FR3Aq3XQ4mWH8ie4Srcjf8oph7VBZF6JZ0ujHNb7DzPCWWc7X/tEf2Ae8DSpmb55PEui7/EMULmeaFXNbyIfVZ9weyCFBGEw7xZ2Ue6pF9T+bHz4KgNIPkbNAgxTrfxHqdTXcackDR/qSU40+hEOWzrgHYAegIWm7iGIIHeFnuKc3Ee7OK1iF5jN5ujwU4fK4m4N/gstdHiFAJ0Or0gmy2+i+GauwjkDB73zOIakjyV/TYwI4CJqqXEbXtc2rT4uOXGpPhgc69OmJplr9oIEn6FKzqLJmM+kmZPmuMp0cT2I8ga6Q4xtAeWj47Z+h0LbU27uqK4LkwDR5ucukRaGDB750WG3c+216m9xJCom63yn2hmUOmkiWU6lKqR8DeE0DqwiGjN/Q6Vr1z+oQ5EeSxAT4+J2xpDOhDkceyx5DpZgXOMyk7y0Y+78KdQVUouVczJFqCubMzenGR7rNzn9CHMkBpg07+14MXKqz7XQIPUB74Q8qwu44JH6rl5kGnf9bgcoJi7xVI25wse0wmvBdkGw7GQQsjq9WCX6pzf6zz40g9nnNGbAGCtgNaANX3pvGp+V5cczv2hwW9fP0/RnZd+lCyA+zT+n2qY8jCEDBogMi4+cMNHVIQ35hHkdlhHdwdFjsTJoKsuXCS6YZZD1B/GQmCPBJcHH3X+HH9pdGpU=
-  - secure: TTmBqJ0U2DrADusK6GYCGQKytnCJUqeqS+2XuE+TRp3pECdpx/arSrGit5j3oBzr2yAiakk/6N6JtWEZU7ftYaOxG7ga1Chs9Bno5T+uL67uFWkqrwxvg4AYgTUXsO+Xel7V1YmiNrXctQeIILEMB7H8OaLc6/cis3laMxY/drwexJjmf249boqfHKJuv+kHwaqfjikGO3uCLZqQsDLgzRSVH/yNvPmgUu/DZXmF6uHcfGqQRra7/VfhzFvXqAhTriYhfUyzKgouWerlcmgscN8uS9SSF8j2W+iXvR1DXyQbbf9/OV7kp+NLVTPg1wvL/RyOiQC8cMTFkdcD0lQ5xl6BBKorFPltk2Zh0Qt7syd7MJ6AMRBjoGckya6EPfTjW3rh0Pr/UDuqrVVqrP0xjgp10LUB72oW5QSDNZPXNdXgj+x9ugYtLZJIes7+yYF7ALlm7R/0RlNNiIlA6HHdOrM3Fx8BY9MHWTtqYGNxZ3yZsYZVdCk2aOyGS5o9DVXLFWWuxDFwsjokA/zc5PstIsBbyJvBqCrfoZ8YQ6b31KcdXKsN+vF+3jJP4p8nDvvz9zeIVYWGYSYrNCpRfZtLWyIyXOSDpfJ+iEgTMlxgyWuZd6dIQ3TdgcqwQhYnF5z/Nl7GgpraIvT4ttaaJkInSm6rgEA9PZr573nIWY10p28=
+    - BUILD_LABEL=1.0.${TRAVIS_BUILD_NUMBER}
+    - secure: pQPYXlJp86IIELAHf48ri2Q7oDISCgA137fT9wTiozlu+5YjwY9wUa+OEbDvKG1RBeqK5aWFP8KWRfoD1CEpTeLg8h+ElvX+JRhUuQS8GaX1Ev4i79YOxnLP1d/K74SEpqM3dWpacuZzP2TlYv9nGSuxC7U2PpxP54ShjBPeaAw3G7lES/vFPIdVhDXjNEjwpjfl/Fy9AanBf1f7souX/7GXVmdvg+NIDkp0ALryD7hfz38HYEd6B1RrLqqNgVFqrbSoh9bmPA9BXt8gjytEAaKkb3hB7X5Sl0Yw3xwaZzNEkxwZSSP/Z80vUJZpwAnr3TAc54yiVKx64N0CoH/kzv7FGX2fn5P4tFmwEYnsqZZvJXQ64fILHOzqiTKho2qSXA1DRsd6RD/DUME24PEpmZPmFCj7ujNuc6L15oFqIU4mSiog6HJFn8dXZAWHWJNgfgipbe/7jT8PwCigMtFsrSPgiKau39rZ3wL9jmhzUGqsGEWaWapuXdcyrG+Erzngh7Z5VI/c6Z7OLQ3zIpDBFXYenB6PV+gFqvH8Cafmb08h85a3Jnp4Va8ml9GJlTf1aNgaITSxzCEQO1RZZgrwS5Z+fu4N9J8hFWk/mou3r9nOazJ+wkGCcudQaBhl70gHluM09yaFRF5+7NjwcTMvRmdGkfA1tCnwsF/xVghci2I=
+    - secure: akbuJ5hN9AWCL+pdsgxV6dUtg318SWK3TgUg9mJ/3ix7L6aNQWb670bYJHA9VCGxX4glzRdzJttu+7PVebbngPpdXTu6TAE3CabZbV0rarPqszvtRPBQmXtA/n36TO4VwHBJdCT3UaOxp2j3pocjqxHujZ1WPS5oUg/LY07HN6y/dgwC01j7CYK6Se7//QUs45KuKcyZkTCZO4qj4Mb+fyUehWoMaq0Ivlflj91CPr/QsIBw/y2zIKlQD/Z07EQx0fVwdhkcapH3iOj2dNoKO40Jx8B2/64OpHnH3w8ycA+QdTWgmrhGbJnhyA+WXVSPTyzIluSJFiseTJPuNH1fJ5sBlN27fPngiEEy9sFhRo/ia1riZwOB1iLqWWv1pquBJHHXYy/PwTWMee8trIjw6LVgTp4tBeLLqoHXJv5z6qubakRbqc8sxSVLXEV+DyxQJ0bcn3ywCTLikhABuRIJPfwK+ekrS3b5KLnw/9mbyaSa/UP2Ko7KAQtdjKeJz5MZ8yRTdO1PI804wUqJKjLQyka9FXY3FvbO8vjkGO1uK7nny19NRDwB65nMD/HywhA2NwHNnyzlpFtw3ZCIJ/qUNW0Qnp34YYBAAYHbq/nTtOklBcPDB3qYW5WA59nPqeU+1RzMZOnYHNKEl5ahtdlituKSy/RrwTh9zMH5eQsGiYA=
+    - secure: FR3Aq3XQ4mWH8ie4Srcjf8oph7VBZF6JZ0ujHNb7DzPCWWc7X/tEf2Ae8DSpmb55PEui7/EMULmeaFXNbyIfVZ9weyCFBGEw7xZ2Ue6pF9T+bHz4KgNIPkbNAgxTrfxHqdTXcackDR/qSU40+hEOWzrgHYAegIWm7iGIIHeFnuKc3Ee7OK1iF5jN5ujwU4fK4m4N/gstdHiFAJ0Or0gmy2+i+GauwjkDB73zOIakjyV/TYwI4CJqqXEbXtc2rT4uOXGpPhgc69OmJplr9oIEn6FKzqLJmM+kmZPmuMp0cT2I8ga6Q4xtAeWj47Z+h0LbU27uqK4LkwDR5ucukRaGDB750WG3c+216m9xJCom63yn2hmUOmkiWU6lKqR8DeE0DqwiGjN/Q6Vr1z+oQ5EeSxAT4+J2xpDOhDkceyx5DpZgXOMyk7y0Y+78KdQVUouVczJFqCubMzenGR7rNzn9CHMkBpg07+14MXKqz7XQIPUB74Q8qwu44JH6rl5kGnf9bgcoJi7xVI25wse0wmvBdkGw7GQQsjq9WCX6pzf6zz40g9nnNGbAGCtgNaANX3pvGp+V5cczv2hwW9fP0/RnZd+lCyA+zT+n2qY8jCEDBogMi4+cMNHVIQ35hHkdlhHdwdFjsTJoKsuXCS6YZZD1B/GQmCPBJcHH3X+HH9pdGpU=
+    - secure: TTmBqJ0U2DrADusK6GYCGQKytnCJUqeqS+2XuE+TRp3pECdpx/arSrGit5j3oBzr2yAiakk/6N6JtWEZU7ftYaOxG7ga1Chs9Bno5T+uL67uFWkqrwxvg4AYgTUXsO+Xel7V1YmiNrXctQeIILEMB7H8OaLc6/cis3laMxY/drwexJjmf249boqfHKJuv+kHwaqfjikGO3uCLZqQsDLgzRSVH/yNvPmgUu/DZXmF6uHcfGqQRra7/VfhzFvXqAhTriYhfUyzKgouWerlcmgscN8uS9SSF8j2W+iXvR1DXyQbbf9/OV7kp+NLVTPg1wvL/RyOiQC8cMTFkdcD0lQ5xl6BBKorFPltk2Zh0Qt7syd7MJ6AMRBjoGckya6EPfTjW3rh0Pr/UDuqrVVqrP0xjgp10LUB72oW5QSDNZPXNdXgj+x9ugYtLZJIes7+yYF7ALlm7R/0RlNNiIlA6HHdOrM3Fx8BY9MHWTtqYGNxZ3yZsYZVdCk2aOyGS5o9DVXLFWWuxDFwsjokA/zc5PstIsBbyJvBqCrfoZ8YQ6b31KcdXKsN+vF+3jJP4p8nDvvz9zeIVYWGYSYrNCpRfZtLWyIyXOSDpfJ+iEgTMlxgyWuZd6dIQ3TdgcqwQhYnF5z/Nl7GgpraIvT4ttaaJkInSm6rgEA9PZr573nIWY10p28=
 before_deploy:
-- openssl aes-256-cbc -pass pass:$ENCRYPTION_PASSWORD -in secring.gpg.enc -out local.secring.gpg -d
-- openssl aes-256-cbc -pass pass:$ENCRYPTION_PASSWORD -in pubring.gpg.enc -out local.pubring.gpg -d
+  - openssl aes-256-cbc -pass pass:$ENCRYPTION_PASSWORD -in secring.gpg.enc -out local.secring.gpg -d
+  - openssl aes-256-cbc -pass pass:$ENCRYPTION_PASSWORD -in pubring.gpg.enc -out local.pubring.gpg -d
 deploy:
-- provider: script
-  script: "./publish.sh"
-  skip_cleanup: true
-  on:
-    tags: true
-    jdk: openjdk8
-    scala: 2.12.11
+  - provider: script
+    script: "./publish.sh"
+    skip_cleanup: true
+    on:
+      tags: true
+      jdk: openjdk8
+      scala: 2.12.11
 notifications:
   slack:
     rooms:
