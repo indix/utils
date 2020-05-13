@@ -2,7 +2,7 @@ language: scala
 scala:
 - 2.10.4
 - 2.11.11
-jdk: oraclejdk8
+jdk: openjdk8
 sudo: false
 cache:
   directories:
@@ -27,7 +27,7 @@ deploy:
   skip_cleanup: true
   on:
     tags: true
-    jdk: oraclejdk8
+    jdk: openjdk8
     scala: 2.11.11
 notifications:
   slack:
