@@ -1,7 +1,7 @@
 language: scala
 scala:
-- 2.10.4
 - 2.11.11
+- 2.12.11
 jdk: openjdk8
 sudo: false
 cache:
@@ -28,7 +28,7 @@ deploy:
   on:
     tags: true
     jdk: openjdk8
-    scala: 2.11.11
+    scala: 2.12.11
 notifications:
   slack:
     rooms:
