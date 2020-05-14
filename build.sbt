@@ -61,13 +61,9 @@ lazy val publishSettings = Seq(
 
 lazy val utils = (project in file(".")).
   settings(commonSettings: _*).
-  settings(unidocSettings: _*).
-  settings(site.settings ++ ghpages.settings: _*).
   settings(
     name := "utils",
-    publish := {},
-    site.addMappingsToSiteDir(mappings in(ScalaUnidoc, packageDoc), "latest/api"),
-    git.remoteRepo := "git@github.com:indix/utils.git"
+    publish := {}
   ).
   aggregate(coreUtils, storeUtils, sparkUtils, gocdUtils)
 
@@ -76,7 +72,7 @@ lazy val coreUtils = (project in file("util-core")).
   settings(publishSettings: _*).
   settings(
     name := "util-core",
-    crossScalaVersions := Seq("2.10.6", "2.11.11"),
+    crossScalaVersions := Seq("2.11.11", "2.12.11"),
     libraryDependencies ++= Seq(
       "org.scalatest" %% "scalatest" % "3.0.3" % Test,
       "org.apache.commons" % "commons-lang3" % "3.5",
@@ -89,7 +85,7 @@ lazy val storeUtils = (project in file("util-store")).
   settings(publishSettings: _*).
   settings(
     name := "util-store",
-    crossScalaVersions := Seq("2.10.6", "2.11.11"),
+    crossScalaVersions := Seq("2.11.11", "2.12.11"),
     libraryDependencies ++= Seq(
       "org.scalatest" %% "scalatest" % "3.0.3" % Test,
       "commons-io" % "commons-io" % "2.5",
