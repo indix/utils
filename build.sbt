@@ -8,13 +8,13 @@ lazy val commonSettings = Seq(
   organization := "com.indix",
   organizationName := "Indix",
   organizationHomepage := Some(url("http://www.indix.com")),
-  scalaVersion := "2.11.11",
+  scalaVersion := "2.12.11",
   scalacOptions ++= Seq("-encoding", "UTF-8", "-deprecation", "-unchecked"),
   javacOptions in (Compile, compile) ++= Seq("-Xlint:deprecation", "-source", "1.8"),
   javacOptions in (Compile, doc) ++= Seq("-source", "1.8"),
   resolvers ++= Seq(
-    "Clojars" at "http://clojars.org/repo",
-    "Concurrent Maven Repo" at "http://conjars.org/repo",
+    "Clojars" at "https://clojars.org/repo",
+    "Concurrent Maven Repo" at "https://conjars.org/repo",
     "Twttr Maven Repo" at "https://maven.twttr.com/"
   )
 )
@@ -93,7 +93,7 @@ lazy val storeUtils = (project in file("util-store")).
     libraryDependencies ++= Seq(
       "org.scalatest" %% "scalatest" % "3.0.3" % Test,
       "commons-io" % "commons-io" % "2.5",
-      "com.twitter" %% "chill" % "0.8.1",
+      "com.twitter" %% "chill" % "0.9.5",
       "org.rocksdb" % "rocksdbjni" % "4.11.2"
     )
   )
@@ -104,19 +104,19 @@ lazy val sparkUtils = (project in file("util-spark")).
   settings(publishSettings: _*).
   settings(
     name := "util-spark",
-    crossScalaVersions := Seq("2.10.6", "2.11.11"),
+    crossScalaVersions := Seq("2.11.11", "2.12.11"),
     libraryDependencies ++= Seq(
       "org.scalatest" %% "scalatest" % "3.0.3" % Test,
-      "org.apache.spark" %% "spark-core" % "2.2.0",
-      "org.apache.spark" %% "spark-sql" % "2.2.0",
-      "com.databricks" %% "spark-avro" % "4.0.0",
+      "org.apache.spark" %% "spark-core" % "2.4.4",
+      "org.apache.spark" %% "spark-sql" % "2.4.4",
+      "org.apache.spark" %% "spark-avro" % "2.4.4",
       "org.apache.hadoop" % "hadoop-aws" % "2.6.0" % Test,
       "com.indix" % "dfs-datastores" % "2.0.21" excludeAll(
         ExclusionRule(organization = "org.apache.hadoop"),
         ExclusionRule(organization = "org.eclipse.jetty")
       ),
-      "org.apache.parquet" % "parquet-avro" % "1.8.1",
-      "org.bdgenomics.utils" %% "utils-misc" % "0.2.13"
+      "org.apache.parquet" % "parquet-avro" % "1.10.1",
+      "org.bdgenomics.utils" %% "utils-misc-spark2" % "0.2.16"
     )
   )
 
