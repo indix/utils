@@ -132,3 +132,22 @@ lazy val gocdUtils = (project in file("util-gocd")).
       "org.mockito" % "mockito-all" % "1.10.19" % Test
     )
   )
+
+lazy val gocdUtils = (project in file("util-gocd")).
+  settings(commonSettings: _*).
+  settings(publishSettings: _*).
+  settings(
+    name := "util-gocd",
+    crossScalaVersions := Seq("2.10.6", "2.11.11"),
+    libraryDependencies ++= Seq(
+      "org.apache.commons" % "commons-lang3" % "3.1",
+      "commons-io" % "commons-io" % "1.3.2",
+      "com.amazonaws" % "aws-java-sdk-s3" % "1.11.127",
+      "cd.go.plugin" % "go-plugin-api" % "17.2.0" % Provided,
+      "com.google.code.gson" % "gson" % "2.2.3",
+      "junit" % "junit" % "4.12" % Test,
+      "com.novocode" % "junit-interface" % "0.11" % Test,
+      "org.mockito" % "mockito-all" % "1.10.19" % Test,
+      "org.scalatest" %% "scalatest" % "3.0.3" % Test
+    )
+  )
